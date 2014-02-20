@@ -13,6 +13,13 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="Evaluate")
 public class Evaluate {
 	
+	public Evaluate(String id) {
+		this.id = id;
+	}
+
+	public Evaluate() {
+	}
+
 	private String id;
 	
 	private String context;
@@ -21,7 +28,7 @@ public class Evaluate {
 	
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}

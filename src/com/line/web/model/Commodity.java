@@ -15,9 +15,16 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Comoidty")
+@Table(name="Commodity")
 public class Commodity {
 	
+	public Commodity() {
+	}
+
+	public Commodity(String id) {
+		this.id = id;
+	}
+
 	private String id;
 	
 	private String name;
@@ -55,7 +62,7 @@ public class Commodity {
 	
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}

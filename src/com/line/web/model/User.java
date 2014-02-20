@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 public class User {
 	
 	private String id;
@@ -20,11 +20,18 @@ public class User {
 	
 	private String password;
 	
+	public User(String id) {
+		this.id = id;
+	}
+
+	public User() {
+	}
+
 	private Shop shop;
 	
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}

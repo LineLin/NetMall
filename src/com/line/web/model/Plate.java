@@ -4,17 +4,25 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name="Plate")
 public class Plate {
 	
+	public Plate(String id) {
+		this.id = id;
+	}
+
+	public Plate() {
+	}
+
 	private String id;
 	
 	private String name;
@@ -34,7 +42,8 @@ public class Plate {
 	}
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(generator="sd")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}

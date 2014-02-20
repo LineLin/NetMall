@@ -16,6 +16,13 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="OrderForm")
 public class OrderForm {
 	
+	public OrderForm() {
+	}
+
+	public OrderForm(String id) {
+		this.id = id;
+	}
+
 	private String id;
 	
 	private int count;
@@ -32,7 +39,7 @@ public class OrderForm {
 	
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}

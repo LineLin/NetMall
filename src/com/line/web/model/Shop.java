@@ -15,8 +15,15 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="Shop")
 public class Shop {
 	
-	private int id;
+	private String id;
 	
+	public Shop(String id) {
+		this.id = id;
+	}
+
+	public Shop() {
+	}
+
 	private String name;
 	
 	private int credit;
@@ -27,12 +34,12 @@ public class Shop {
 
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
-	public int getId() {
+	@GenericGenerator(name="sd",strategy="uuid")
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

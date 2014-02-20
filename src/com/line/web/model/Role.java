@@ -23,11 +23,20 @@ public class Role {
 	
 	private String name;
 	
+	public Role(String id) {
+		super();
+		this.id = id;
+	}
+
+	public Role() {
+		super();
+	}
+
 	private List<User> users;
 	
 	@Id
 	@GeneratedValue(generator="sd")
-	@GenericGenerator(name="sd",strategy="assign")
+	@GenericGenerator(name="sd",strategy="uuid")
 	public String getId() {
 		return id;
 	}
@@ -45,7 +54,7 @@ public class Role {
 	}
 	@ManyToMany
 	@JoinTable(
-			name="role_ref_user",
+			name="Role_ref_User",
 			joinColumns={@JoinColumn(name="role_id")},
 			inverseJoinColumns={@JoinColumn(name="user_id")}
 	)
