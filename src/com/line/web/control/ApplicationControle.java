@@ -9,10 +9,9 @@ import org.springframework.web.portlet.ModelAndView;
 @RequestMapping("/login")
 public class ApplicationControle{
 	
-	@RequestMapping(value="/index",method=RequestMethod.POST)
-	public ModelAndView index(String name){
-			System.out.println("name :" + name + "---ds");
-			//ModelAndView view = new ModelAndView("sd.jsp");
+	@RequestMapping(value="/",method=RequestMethod.POST)
+	public ModelAndView index(String name,String password){
+				
 		return null;
 	}
 }

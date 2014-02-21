@@ -1,5 +1,6 @@
 package com.line.web.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -47,7 +48,8 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@Column(name="account",unique=true)
 	public String getAccount() {
 		return account;
 	}
