@@ -38,4 +38,15 @@ public class UserService {
 		return user;
 	}
 	
+	public boolean isUserExist(String account){
+		
+		User user = userDao.findUserByAccount(account);
+		
+		if(user == null){
+			return false;
+		}
+		
+		return true;
+	}
+	
 }
