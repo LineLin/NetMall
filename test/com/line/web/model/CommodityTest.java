@@ -43,7 +43,7 @@ public class CommodityTest extends TestCase {
 			
 			Commodity com = (Commodity) session.createQuery("from Commodity com where com.name = ? ")
 						.setParameter(0, "猪肉")
-						.uniqueResult();
+						.list().get(0);
 			assertNotNull(com);
 			assertEquals(com.getName(),"猪肉");
 			assertEquals(com.getEnjoinShop().getName(),"Line");
@@ -57,5 +57,4 @@ public class CommodityTest extends TestCase {
 		}
 		
 	}
-	
 }

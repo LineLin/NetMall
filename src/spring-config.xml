@@ -12,22 +12,14 @@
         http://www.springframework.org/schema/context   
         http://www.springframework.org/schema/context/spring-context.xsd"> 
 
-	<!-- 配置这个component-scan 的时候，会隐式的配置了下面2个bean
-		AutowiredAnnotationBeanPostProcessor ：用于@Autowired标签为field注入依赖。
-		CommonAnnotationBeanPostProcessor 
-	-->
-    <context:component-scan base-package="com.line.web.*"/>
+    <context:component-scan base-package="com.line.web.control"/>
 	
-	<!-- 配置注解式的Handler  -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-	
-	
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="WEB-INF/view/"/>
 		<property name="suffix" value=".jsp"/>
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 	</bean>
-
 </beans>
