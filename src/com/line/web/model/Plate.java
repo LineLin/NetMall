@@ -27,6 +27,8 @@ public class Plate {
 	
 	private String name;
 	
+	private int level;
+	
 	private List<Plate> childPlate;
 
 	private Plate parentPlate;
@@ -67,5 +69,13 @@ public class Plate {
 
 	public void setChildPlate(List<Plate> childPlate) {
 		this.childPlate = childPlate;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

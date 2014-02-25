@@ -23,9 +23,9 @@ public class UserDaoImpl implements UserDao {
 	public User findUser(String account,String password){
 		
 		User user = (User) sf.getCurrentSession()
-					.createQuery("from User u where u.account = ? and u.password = ?")
-					.setParameter(0,account)
-					.setParameter(1,password)
+					.createQuery("from User u where u.account =?1 and u.password =?2")
+					.setParameter("1",account)
+					.setParameter("2",password)
 					.uniqueResult();
 		return user;
 	}
@@ -38,8 +38,8 @@ public class UserDaoImpl implements UserDao {
 	public User findUserByAccount(String account) {
 		
 		User user = (User) sf.getCurrentSession()
-				.createQuery("from User u where u.account = ? and u.password = ?")
-				.setParameter(0,account)
+				.createQuery("from User u where u.account = ?1")
+				.setParameter("1",account)
 				.uniqueResult();
 		return user;
 	}

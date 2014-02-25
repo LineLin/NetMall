@@ -24,7 +24,7 @@ public class UserManagerController{
 		
 		if( !userService.checkFormat(account, password)){
 			rdAttr.addFlashAttribute("lgErro","账号或密码不能为空！");
-			return "redirect:index.html";
+			return "redirect:/";
 		}
 		
 		User user = userService.verification(account, password);
@@ -35,6 +35,6 @@ public class UserManagerController{
 			rdAttr.addFlashAttribute("lgErro","用户不存在或者密码错误！");
 		}
 		
-		return "redirect:index.html";
+		return "redirect:/";
 	}
 }
