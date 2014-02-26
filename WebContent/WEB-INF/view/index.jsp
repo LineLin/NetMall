@@ -196,14 +196,16 @@
 
 		</style>
 
-		<script src="source/jquery-1.11.0.js">
+		<script src="public/js/jquery-1.11.0.js">
 		</script>
 	</head>
 	<body>
-	<c:if test="${userName == \"\"" var="">
-	<c:out value="sdddd"/>
-	</c:if>
-	
+	<ul>
+	<c:forEach items="${pList}" var="p">
+		${userName}
+		<li>板块名：${p.name}</li>
+	</c:forEach>
+	</ul>
 		<div class="page">
 			<div class="head-0">
 				<ul>

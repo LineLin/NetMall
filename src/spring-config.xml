@@ -23,15 +23,19 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 	 -->
-	 
+	<!-- 默认配置注解式的Handler-->
 	 <mvc:annotation-driven/>
 	
-	
+	<!-- 配置视图处理器，用于处理controller返回的视图 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="WEB-INF/view/"/>
-		<property name="suffix" value=".jsp"/>
-		<!-- 
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/> -->
+		<property name="suffix" value=".jsp"/> 
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/> 
 	</bean>
-
+	
+	<!-- 配置静态文件处理器 -->
+	<mvc:resources location="/public/img/" mapping="public/img/**"/>
+	<mvc:resources location="/public/js/" mapping="public/js/**"/>
+	<mvc:resources location="/public/css/" mapping="public/cs/**"/>
+	<mvc:resources location="/public/file/" mapping="public/file/**"/>
 </beans>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,26 +20,28 @@ public class ApplicationController {
 	@Autowired
 	private AppDataService appData;
 	
-	@RequestMapping("/t")
-	public ModelAndView index(@ModelAttribute("user") User user){
+	@RequestMapping("/index")
+	public String index(@ModelAttribute("user") User user,BindingResult result,Model model){
 		
-		ModelAndView md = new ModelAndView("index");
+		if(result.hasErrors()){
+			System.out.println("error");
+		}
 		
 		if(user != null){
-			md.addObject("userId", user.getId());
-			md.addObject("userName",user.getName());
+			model.addAttribute("userId", user.getId());
+			model.addAttribute("userName",user.getName());
 		}else{
-			md.addObject("userName","游客");
+			model.addAttribute("userName","游客");
 		}
 		
 		List<Plate> pList = appData.getTopLevelPlate();
 		
 		if(pList.isEmpty()){
-			System.out.print("dsad");
 			pList = appData.initData();
 		}
+		model.addAttribute("pList",pList);
 		System.out.println("-----------------------------------------");
-//		md.setViewName("index");
-		return md;
+
+		return "index";
 	}
 }
