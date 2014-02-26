@@ -20,7 +20,7 @@ public class ApplicationController {
 	@Autowired
 	private AppDataService appData;
 	
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String index(@ModelAttribute("user") User user,BindingResult result,Model model){
 		
 		if(result.hasErrors()){
