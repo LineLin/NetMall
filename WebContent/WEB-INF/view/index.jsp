@@ -110,7 +110,6 @@
 			{
 				width: 198px;
 				height:25px;
-				margin: 0px 0px 4px 0px;
 				border-bottom: 1px solid #dedede;
 			}
 			.category-item h3:hover
@@ -358,7 +357,7 @@
 						<li><a href="">数码</a></li>
 					</ul>
 				</div>
-				<div id="slid" style="margin-left: 200px;float:left"><img src="public/img/ad.jpg"/></div>
+				<div id="slid" style="margin-left: 200px;float:left"><img src="<script>alert();</script>"/></div>
 			</div>
 		</div>
 		<div id="mask">
