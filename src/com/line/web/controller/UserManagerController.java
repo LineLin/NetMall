@@ -1,9 +1,14 @@
 package com.line.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,21 +25,24 @@ public class UserManagerController{
 	private UserService userService;
 		
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String account, String password,ModelAndView model,RedirectAttributes rdAttr){
-		
+	public	@ResponseBody ModelMap login(@RequestBody User a,ModelMap model){
+		String account = a.getAccount();
+		String password = a.getPassword();
 		if( !userService.checkFormat(account, password)){
-			rdAttr.addFlashAttribute("lgErro","账号或密码不能为空！");
-			return "redirect:/";
+			model.addAttribute("errorMsg","账号和密码不能为空，且不带特殊字符");
+			return model;
 		}
 		
 		User user = userService.verification(account, password);
 		if(user != null){
-			model.addObject("user",user);
-			model.addObject("userId",user.getId());
+			model.addAttribute("flag",true);
+			model.addAttribute("user",user);
+			model.addAttribute("userId",user.getId());
 		}else{
-			rdAttr.addFlashAttribute("lgErro","用户不存在或者密码错误！");
+			model.addAttribute("flag",false);
+			model.addAttribute("errorMsg","账户不存在或密码错误！");
 		}
 		
-		return "redirect:/";
+		return model;
 	}
 }

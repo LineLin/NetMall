@@ -19,10 +19,15 @@
     <context:component-scan base-package="com.line.web.*"/>
 	
 	
-	<!-- 配置注解式的Handler 
+	<!-- 配置注解式的Handler-
+		spring 3.1之前使用的是下面两个
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-	 -->
+		spring 3.1之后默认注入的是
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+ 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	-->
+	
 	<!-- 默认配置注解式的Handler-->
 	 <mvc:annotation-driven/>
 	
@@ -36,6 +41,7 @@
 	<!-- 配置静态文件处理器 -->
 	<mvc:resources location="/public/img/" mapping="public/img/**"/>
 	<mvc:resources location="/public/js/" mapping="public/js/**"/>
-	<mvc:resources location="/public/css/" mapping="public/cs/**"/>
+	<mvc:resources location="/public/css/" mapping="public/css/**"/>
 	<mvc:resources location="/public/file/" mapping="public/file/**"/>
+	
 </beans>

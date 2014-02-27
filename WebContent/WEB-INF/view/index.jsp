@@ -193,24 +193,26 @@
 			{
 				float: right;
 			}
-
+			#error-msg
+			{
+				margin: 8px 0;
+				display:none;
+			}
 		</style>
 
 		<script src="public/js/jquery-1.11.0.js">
 		</script>
 	</head>
 	<body>
+		${contextPath}
 	<ul>
-	<c:forEach items="${pList}" var="p">
-		${userName}
-		<li>板块名：${p.name}</li>
-	</c:forEach>
 	</ul>
 		<div class="page">
 			<div class="head-0">
 				<ul>
+					<li><a id="user" href="#"></a></li>
 					<li><a id="login" href="#">登陆</a></li>
-					<li><a id="" href="#">注册</a></li>
+					<li><a id="regist" href="#">注册</a></li>
 				</ul>
 			</div>
 			<div class="head-ad">
@@ -356,19 +358,19 @@
 						<li><a href="">数码</a></li>
 					</ul>
 				</div>
-				<div id="slid" style="margin-left: 200px;float:left"><img src="ad.jpg"/></div>
+				<div id="slid" style="margin-left: 200px;float:left"><img src="public/img/ad.jpg"/></div>
 			</div>
 		</div>
 		<div id="mask">
 		</div>
 		<div id="login-box">
-			<span id="close">X</span>
-			<form action="user/login.do" method="POST">
-				<p id="error-msg" style="color:red;text-align:center;margin:5px,0px;display:none">sdhj</p>
-				密码: <input type="text" name="account" onfocus="true"/><br/>
-				账号: <input type="password" name="password"/><br/>
-				<input class="btn-submit" type="submit" value="sigin in"/>
-			</form>
+			<a id="close" href="#">X</a>
+			<div class="lg-form">
+				<p id="error-msg" style="color:red;text-align:center;"></p>
+				密码: <input id="lg-account" type="text" name="account" onfocus="true"/><br/>
+				账号: <input id="lg-psw" type="password" name="password"/><br/>
+				<input id="lg-submit" class="btn-submit" type="submit" value="登陆"/>
+			</div>
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function(){
@@ -400,7 +402,43 @@
 			$("#close").click(function(){
 				$("#mask").css("display","none");
 				$("#login-box").css("display","none");
-			})
+				$("#error-msg").css("display","none");
+			});
+
+			//Ajax 登陆
+			$("#lg-submit").click(
+				function (){
+					$.ajax({
+						url: "user/login",
+						type:"POST",
+						cache:false,
+						headers:{
+							'Content-Type':'application/json',
+							'Accept':'application/json'
+						},
+						dataType:"json",
+						data: JSON.stringify({
+							'account' : $("#lg-account").val(),
+							'password' : $("#lg-psw").val()
+						}),
+						error: function(){
+							$("#error-msg").innerHTML="服务器繁忙，请重新试过。";
+						},
+						success: function(data){
+							if(data.flag == true){
+								$("#mask").css("display","none");
+								$("#login-box").css("display","none");
+								$("#error-msg").css("display","none");
+								$("#login").innerHTML = $("#regist").innerHTML = "";
+								$("#user").innerHTML = data.user.userName;
+							}else{
+								$("#error-msg").css("display","block");
+								$("#error-msg").text(data.errorMsg);
+							}
+						}
+					});
+				}
+			);
 		</script>
 	</body>
 </html>

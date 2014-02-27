@@ -2,13 +2,12 @@ package com.line.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.line.web.model.Plate;
 import com.line.web.model.User;
@@ -21,12 +20,9 @@ public class ApplicationController {
 	private AppDataService appData;
 	
 	@RequestMapping("/")
-	public String index(@ModelAttribute("user") User user,BindingResult result,Model model){
+	public String index(HttpServletRequest request,Model model){
 		
-		if(result.hasErrors()){
-			System.out.println("error");
-		}
-		
+		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
 			model.addAttribute("userId", user.getId());
 			model.addAttribute("userName",user.getName());
@@ -40,8 +36,7 @@ public class ApplicationController {
 			pList = appData.initData();
 		}
 		model.addAttribute("pList",pList);
-		System.out.println("-----------------------------------------");
-
+		
 		return "index";
 	}
 }
