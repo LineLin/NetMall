@@ -33,8 +33,10 @@ public class ApplicationController {
 		List<Plate> pList = appData.getTopLevelPlate();
 		
 		if(pList.isEmpty()){
-			pList = appData.initData();
+			appData.initData();
 		}
+		
+		
 		model.addAttribute("pList",pList);
 		
 		return "index";

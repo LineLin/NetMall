@@ -23,7 +23,7 @@ public class PlateDaoImpl implements PlateDao {
 	}
 	
 	@Override
-	public void addPlate(Plate plate){
+	public void savePlate(Plate plate){
 		sf.getCurrentSession().save(plate);
 	}
 }

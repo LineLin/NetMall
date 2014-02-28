@@ -22,10 +22,6 @@ public class Commodity {
 	public Commodity() {
 	}
 
-	public Commodity(String id) {
-		this.id = id;
-	}
-
 	private String id;
 	
 	private String name;
@@ -35,10 +31,14 @@ public class Commodity {
 	private int stock;
 	
 	private int sales;
+	
+	private String image;
 
 	private String description;
 	
 	private Shop enjoinShop;
+	
+	private Plate enjoinPlate;
 	
 	private List<CommodityAttribute> attributes; 
 	
@@ -115,6 +115,24 @@ public class Commodity {
 
 	public void setAttributes(List<CommodityAttribute> attributes) {
 		this.attributes = attributes;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="plate_id")
+	public Plate getEnjoinPlate() {
+		return enjoinPlate;
+	}
+
+	public void setEnjoinPlate(Plate enjoinPlate) {
+		this.enjoinPlate = enjoinPlate;
 	}
 	
 }

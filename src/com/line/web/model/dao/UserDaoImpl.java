@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 	 * @param user 要添加的用户
 	 */
 	@Override
-	public void addUser(User user) {
+	public void saveUser(User user) {
 		
 		sf.getCurrentSession().save(user);
 	}

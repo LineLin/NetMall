@@ -8,5 +8,5 @@ public interface PlateDao {
 	
 	public List<Plate> getTopLevelPlate();
 	
-	public void addPlate(Plate plate);
+	public void savePlate(Plate plate);
 }

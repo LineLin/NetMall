@@ -203,7 +203,6 @@
 		</script>
 	</head>
 	<body>
-		${contextPath}
 	<ul>
 	</ul>
 		<div class="page">
@@ -357,7 +356,7 @@
 						<li><a href="">数码</a></li>
 					</ul>
 				</div>
-				<div id="slid" style="margin-left: 200px;float:left"><img src="<script>alert();</script>"/></div>
+				<div id="slid" style="margin-left: 200px;float:left"><img src="public/img/ad.jpg"/></div>
 			</div>
 		</div>
 		<div id="mask">

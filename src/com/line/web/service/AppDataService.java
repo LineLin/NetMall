@@ -6,9 +6,11 @@ import com.line.web.model.Plate;
 
 public interface AppDataService {
 	
-	public List initData();
+	public void initData();
 	
 	public List<Plate> getTopLevelPlate();
+	
+	public List<Plate> getSubPlate(Plate parentPlate);
 	
 //	public List<>
 }

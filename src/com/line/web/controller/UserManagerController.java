@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,8 @@ public class UserManagerController{
 	public	@ResponseBody ModelMap login(@RequestBody User a,ModelMap model){
 		String account = a.getAccount();
 		String password = a.getPassword();
+		System.out.println("account: " + account);
+		System.out.println("password: " + password);
 		if( !userService.checkFormat(account, password)){
 			model.addAttribute("errorMsg","账号和密码不能为空，且不带特殊字符");
 			return model;
@@ -44,5 +47,24 @@ public class UserManagerController{
 		}
 		
 		return model;
+	}
+	
+	//页面跳转
+	@RequestMapping("/user/regist")
+	public String regist(){
+		return "regist";
+	}
+	
+	@RequestMapping("/user/save")
+	public String saveUser(User user,Model model){
+		
+		boolean exist = userService.isUserExist(user.getAccount());
+		
+		if(exist){
+			model.addAttribute("errorMsg","账户已存在");
+			return "forward:/user/regist";
+		}
+		
+		
 	}
 }

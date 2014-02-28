@@ -22,22 +22,32 @@ public class AppDataServiceImpl implements AppDataService {
 	public List<Plate> getTopLevelPlate() {
 		return plateDao.getTopLevelPlate();
 	}
-
+	
+	/**
+	 * 功能：为系统初始化数据
+	 */
 	@Override
-	public List initData() {
-		//初始化一级板块
-		List plates = new ArrayList();
+	public void initData() {
+		initPlate();
+	}	
+	
+	private void initPlate(){
 		
+		List<Plate> plates = new ArrayList<>();
 		String[] pNames = {"家具","珠宝","服装","图书","电子商品"};
 		for(int i=0; i<pNames.length; i++){
 			Plate plate = new Plate();
 			plate.setName(pNames[i]);
 			plate.setLevel(1);
-			plateDao.addPlate(plate);
-			System.out.println(plate.getId());
+			plateDao.savePlate(plate);
 			plates.add(plate);
 		}
-		return plates;
 	}
 
+	@Transactional(readOnly=true)
+	@Override
+	public List<Plate> getSubPlate(Plate parentPlate) {
+		return null;
+	}
+	
 }

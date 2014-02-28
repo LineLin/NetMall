@@ -11,7 +11,7 @@ public interface UserDao {
 	
 	public User findUserByAccount(String account);
 	
-	public void addUser(User user);
+	public void saveUser(User user);
 	
 	public List<User> allUser();
 	
