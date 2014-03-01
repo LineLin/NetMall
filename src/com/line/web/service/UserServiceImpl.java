@@ -15,6 +15,9 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao userDao;
 	
+	/**
+	 * 功能：检查账户和密码是否符合格式
+	 */
 	public boolean checkFormat(String account,String password){
 		
 		if(account == null || password == null){
@@ -31,12 +34,20 @@ public class UserServiceImpl implements UserService{
 		return true;
 	}
 	
+	/**
+	 *	功能：登陆验证
+	 */
 	public User verification(String account,String password){
 		
 		User user = userDao.findUser(account, password);
 		
 		return user;
 	}
+	
+	/**
+	 * @param account 账号
+	 * 功能：检查账号是否已存在
+	 */
 	
 	public boolean isUserExist(String account){
 		
@@ -47,6 +58,11 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		return true;
+	}
+	
+	public void saveUser(User user){
+		
+		userDao.saveUser(user);
 	}
 	
 }

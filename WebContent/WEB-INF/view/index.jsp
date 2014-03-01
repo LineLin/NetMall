@@ -158,26 +158,21 @@
 				display: inline-block;
 				margin: 10px 8px;
 			}
-			
 			#mask
 			{
 				display: none;
-				z-index: 100;
-				top:0;
-				bottom:0;
-				right: 0;
-				left: 0;
+				width: 100%;
+				height: 100%;
+				top:0px;
 				position: absolute;
-				background: #fff;
-				opacity: 0.5;
-				-moz-opacity:0.5;
-				filter:alpha(opacity=50);
+				background: rgba(255, 255, 255, 0.5);
+				
 			}
 			#login-box
 			{
-				z-index: 101;
-				position: absolute;
+				z-index: 10;
 				display: none;
+				margin: auto;
 				width: 400px;
 				height: 150px;
 				background-color: #fff;
@@ -360,31 +355,18 @@
 			</div>
 		</div>
 		<div id="mask">
-		</div>
-		<div id="login-box">
-			<a id="close" href="#">X</a>
-			<div class="lg-form">
-				<p id="error-msg" style="color:red;text-align:center;"></p>
-				密码: <input id="lg-account" type="text" name="account" onfocus="true"/><br/>
-				账号: <input id="lg-psw" type="password" name="password"/><br/>
-				<input id="lg-submit" class="btn-submit" type="submit" value="登陆"/>
+			<div id="login-box">
+				<a id="close" href="#">X</a>
+				<div class="lg-form">
+					<p id="error-msg" style="color:red;text-align:center;"></p>
+					密码: <input id="lg-account" type="text" name="account" onfocus="true"/><br/>
+					账号: <input id="lg-psw" type="password" name="password"/><br/>
+					<input id="lg-submit" class="btn-submit" type="submit" value="登陆"/>
+				</div>
 			</div>
 		</div>
+
 		<script type="text/javascript">
-			$(document).ready(function(){
-				var bdWidth = document.body.clientWidth;
-				var bdHeight = document.body.clientHeight;
-				$("#mask").css({
-					"height":bdHeight,
-					"width":bdWidth
-				});
-				var left = ( bdWidth / 2 ) - 200;
-				var top = (bdHeight / 2) - 75;
-				$("#login-box").css({
-					"left": left + "px",
-					"top" : top + "px"
-				})
-			});
 			$(".category-item").hover(function(){
 				var source = this.childNodes[3];
 				source.style.display = "block";

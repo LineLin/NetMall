@@ -36,9 +36,9 @@ public class ApplicationController {
 			appData.initData();
 		}
 		
-		
 		model.addAttribute("pList",pList);
 		
 		return "index";
 	}
+	
 }

@@ -9,5 +9,7 @@ public interface UserService {
 	public User verification(String account,String password);
 	
 	public boolean isUserExist(String account);
+	
+	public void saveUser(User user);
 
 }
