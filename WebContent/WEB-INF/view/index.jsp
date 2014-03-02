@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -108,9 +105,14 @@
 			}
 			.category-item
 			{
-				width: 198px;
-				height:25px;
+				width: 196px;
+				height:30px;
 				border-bottom: 1px solid #dedede;
+			}
+			.category-item h3
+			{
+				line-height: 2em;
+				height: 30px;
 			}
 			.category-item h3:hover
 			{
@@ -192,14 +194,64 @@
 				margin: 8px 0;
 				display:none;
 			}
+			#slider
+			{
+				position: relative;
+				width:700px;
+				height: 302px;
+				margin-left: 200px;
+				overflow: hidden;
+			}
+			#slider ul
+			{
+				width: 3000px;
+				position: absolute;
+				float: left;
+				left: 0px;
+			}
+			#slider ul li
+			{
+				display: inline;
+				list-style: none;
+				float: left;
+			}
+			#slider a
+			{
+				display: block;
+			}
+			#slider img
+			{
+				display: block;
+				width: 700px;
+				height: 302px;
+			}
+			.sibd
+			{
+				position: absolute;
+				left: 600px;
+				top:280px;
+				z-index: 10;
+			}
+			.btn-imgSel
+			{
+				cursor: pointer;
+				text-align: center;
+				width: 20px;
+				height: 20px;
+				display: inline-block;
+				background-color: #DDD;
+				border-radius: 15px;
+			}
+			.sibd .cur
+			{
+				background: #99CC66;
+			}
 		</style>
 
 		<script src="public/js/jquery-1.11.0.js">
 		</script>
 	</head>
 	<body>
-	<ul>
-	</ul>
 		<div class="page">
 			<div class="head-0">
 				<ul>
@@ -208,9 +260,7 @@
 					<li><a id="regist" href="#">注册</a></li>
 				</ul>
 			</div>
-			<div class="head-ad">
-
-			</div>
+			<div class="head-ad"></div>
 			<div class="md">
 				<div class="categorys">
 					<div class="l_cat_til">
@@ -351,7 +401,20 @@
 						<li><a href="">数码</a></li>
 					</ul>
 				</div>
-				<div id="slid" style="margin-left: 200px;float:left"><img src="public/img/ad.jpg"/></div>
+				<div id="slider">
+					<ul id="slider-list">
+						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
+					</ul>
+					<div class="sibd">
+						<span class="btn-imgSel cur">1</span>
+						<span class="btn-imgSel">2</span>
+						<span class="btn-imgSel">3</span>
+						<span class="btn-imgSel">4</span>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="mask">
@@ -367,6 +430,7 @@
 		</div>
 
 		<script type="text/javascript">
+			startImagePlay();
 			$(".category-item").hover(function(){
 				var source = this.childNodes[3];
 				source.style.display = "block";
@@ -383,6 +447,75 @@
 				$("#mask").css("display","none");
 				$("#login-box").css("display","none");
 				$("#error-msg").css("display","none");
+			});
+
+			//----------------------图片轮播-----------------------------
+			var i=0;
+			var frequence = 25.0/1000;
+			var count = 4;
+			var timeTaskId;
+			function setCurBtn(){
+				var btnList = $(".btn-imgSel");
+				for(var j = 0;j<count;j++){
+					if(j == i){
+						$(btnList[j]).attr("class","btn-imgSel cur");
+					}else{
+						$(btnList[j]).attr("class","btn-imgSel");
+					}
+				};
+			}
+			function changeImage(step,interval,isAuto){
+			
+				var left = -(i*700.0);
+				i = isAuto ? (i +1)%count : i;
+				var distance = interval/step;
+				for(var j=0;j<step;j++){
+					
+					if(i == 0){
+						$($("#slider-list").children()[0]).css({
+								position:"relative",
+								left: 700*(count)+"px"
+							});
+						setTimeout(function(){
+							$($("#slider-list").children()[0]).css({
+								position:"static",
+								left: "0px"
+							});
+							$("#slider-list").css("left","0px");
+						},(1/frequence)*step+1);
+					}/*else{
+						$($("#slider-list").children()[0]).css({
+								position:"static",
+								left:"0px"
+							});
+					}*/
+					setTimeout(function(){
+						left-= distance;	
+						$("#slider-list").css("left",left+"px");
+					},(1/frequence)*(j+1));
+				}
+				setCurBtn();
+			}
+			function startImagePlay(){
+				timeTaskId = setInterval("changeImage(20,700,true)",5000);
+			}
+			function stopImagePlay(){
+				clearInterval(timeTaskId);
+			}
+			
+
+			$(".btn-imgSel").click(function(){
+				stopImagePlay();
+				var flag = false;
+				var to = $(this).text()-1;
+				var interval = (to - i)*700;
+				if(i==0){
+					flag = true;
+				}
+				changeImage(20,interval,flag);
+				i = to;
+				setCurBtn();
+				startImagePlay();
 			});
 
 			//Ajax 登陆
