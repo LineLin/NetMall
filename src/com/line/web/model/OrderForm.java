@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="OrderForm")
+@Table(name="orderform")
 public class OrderForm {
 	
 	public OrderForm() {

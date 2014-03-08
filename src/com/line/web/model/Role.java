@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author line
  */
 @Entity
-@Table(name="Role")
+@Table(name="role")
 public class Role {
 	
 	private String id;
@@ -54,7 +54,7 @@ public class Role {
 	}
 	@ManyToMany
 	@JoinTable(
-			name="Role_ref_User",
+			name="role_ref_user",
 			joinColumns={@JoinColumn(name="role_id")},
 			inverseJoinColumns={@JoinColumn(name="user_id")}
 	)

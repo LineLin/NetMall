@@ -30,7 +30,7 @@ public class ApplicationController {
 			model.addAttribute("userName","游客");
 		}
 		
-		List<Plate> pList = appData.getTopLevelPlate();
+		List<Plate> pList =null;
 		
 		if(pList.isEmpty()){
 			appData.initData();

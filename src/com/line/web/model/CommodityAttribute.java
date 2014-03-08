@@ -10,10 +10,9 @@ import org.hibernate.annotations.GenericGenerator;
 /**
  * 商品的订制属性，适用于不同商品拥有丰富的属性。
  * @author line
- *
  */
 @Entity
-@Table(name="Commodity_Attr")
+@Table(name="commodity_attr")
 public class CommodityAttribute {
 	
 	public CommodityAttribute() {

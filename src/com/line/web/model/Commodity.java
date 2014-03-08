@@ -16,30 +16,36 @@ import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-@Table(name="Commodity")
+@Table(name="commodity")
 public class Commodity {
 	
-	public Commodity() {
-	}
-
 	private String id;
 	
+	//商品名
 	private String name;
 	
+	//价格
 	private double price;
 	
+	//库存
 	private int stock;
 	
+	//销量
 	private int sales;
 	
+	//图片
 	private String image;
 
+	//描述
 	private String description;
 	
+	//所属商店
 	private Shop enjoinShop;
 	
+	//所属板块
 	private Plate enjoinPlate;
 	
+	//特别属性
 	private List<CommodityAttribute> attributes; 
 	
 	@ManyToOne
@@ -134,5 +140,5 @@ public class Commodity {
 	public void setEnjoinPlate(Plate enjoinPlate) {
 		this.enjoinPlate = enjoinPlate;
 	}
-	
+
 }

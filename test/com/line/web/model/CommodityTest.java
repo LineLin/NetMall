@@ -1,10 +1,10 @@
 package com.line.web.model;
 
+import junit.framework.TestCase;
+
 import org.hibernate.Session;
 
 import com.line.web.utils.HibernateUtil;
-
-import junit.framework.TestCase;
 
 public class CommodityTest extends TestCase {
 	private Session session;

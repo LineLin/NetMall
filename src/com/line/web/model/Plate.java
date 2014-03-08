@@ -2,6 +2,7 @@ package com.line.web.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Plate")
+@Table(name="plate")
 public class Plate {
 	
 	public Plate(String id) {
@@ -29,6 +30,8 @@ public class Plate {
 	
 	private int level;
 	
+	private int showSeq;
+	
 	private List<Plate> childPlate;
 
 	private Plate parentPlate;
@@ -38,7 +41,8 @@ public class Plate {
 	public Plate getParentPlate() {
 		return parentPlate;
 	}
-
+	
+	@Column(name="pid")
 	public void setParentPlate(Plate parentPlate) {
 		this.parentPlate = parentPlate;
 	}
@@ -77,5 +81,13 @@ public class Plate {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public int getShowSeq() {
+		return showSeq;
+	}
+
+	public void setShowSeq(int showSeq) {
+		this.showSeq = showSeq;
 	}
 }

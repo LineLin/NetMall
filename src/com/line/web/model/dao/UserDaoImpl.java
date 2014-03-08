@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.line.web.model.User;
 
 @Repository("userDao")
+@SuppressWarnings("unchecked")
 public class UserDaoImpl implements UserDao {
 	
 	@Autowired

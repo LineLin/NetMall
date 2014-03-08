@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Evaluate")
+@Table(name="evaluate")
 public class Evaluate {
 	
 	public Evaluate(String id) {

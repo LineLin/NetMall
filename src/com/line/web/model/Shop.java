@@ -2,6 +2,7 @@ package com.line.web.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,14 +13,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="Shop")
+@Table(name="shop")
 public class Shop {
 	
 	private String id;
-	
-	public Shop(String id) {
-		this.id = id;
-	}
 
 	public Shop() {
 	}
@@ -44,6 +41,7 @@ public class Shop {
 	}
 	
 	@OneToOne
+	@Column(name="boss")
 	public User getShopKeeper() {
 		return shopKeeper;
 	}

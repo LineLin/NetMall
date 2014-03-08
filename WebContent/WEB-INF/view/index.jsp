@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Line</title>
@@ -160,15 +160,195 @@
 				display: inline-block;
 				margin: 10px 8px;
 			}
+			
+			#slider
+			{
+				display: inline-block;
+				position: relative;
+				width:700px;
+				height: 302px;
+				margin-left: 204px;
+				overflow: hidden;
+			}
+			#slider ul
+			{
+				width: 3000px;
+				position: absolute;
+				float: left;
+				left: 0px;
+			}
+			#slider ul li
+			{
+				display: inline;
+				list-style: none;
+				float: left;
+			}
+			#slider a
+			{
+				display: block;
+			}
+			#slider img
+			{
+				margin-top:4px; 
+				display: block;
+				width: 700px;
+				height: 298px;
+			}
+			.sibd
+			{
+				position: absolute;
+				left: 600px;
+				top:280px;
+				z-index: 10;
+			}
+			.btn-imgSel
+			{
+				cursor: pointer;
+				text-align: center;
+				width: 20px;
+				height: 20px;
+				display: inline-block;
+				background-color: #DDD;
+				border-radius: 15px;
+			}
+			.sibd .cur
+			{
+				background: #99CC66;
+			}
+			#news
+			{
+				display: inline-block;
+				position: absolute;
+				float:right;
+				margin-left: 4px;
+				width: 292px;
+			}
+			#news h3
+			{
+				height: 29px;
+				line-height: 30px;
+				border-bottom: 2px solid #eee;
+				color: #666;
+				font-size: 16px;
+			}
+			#news ol
+			{
+				width: 290px;
+				height: 265px;
+				border:1px solid #eee;
+				border-top: 0px;
+			}
+			#news ol li
+			{
+				height: 30px;
+				margin-top: 5px;
+				text-align: left;
+			}
+			#news a
+			{
+				color: #666;
+				display: block;
+				text-overflow:ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+			.comm-show
+			{
+
+			}
+			.cm-b
+			{
+				height: 580px;
+				position: relative;
+				margin: 20px 0;
+				overflow: hidden;
+				background-color: #fff;
+			}
+			.cm-nav
+			{
+				color: #666;
+				font-family: 微软雅黑 "serif";
+				border-bottom: 2px solid #60a42c;
+			}
+			.cm-nav h2
+			{
+				text-align: center;
+				width: 228px;
+				height: 49px;
+				line-height: 30px;
+				font-size: 22px;
+				display: inline-block;
+			}
+			.cm-nav ul
+			{
+				display: inline-block;
+			}
+			.cm-nav li
+			{
+				cursor: pointer;
+				text-align: center;
+				width: 120px;
+				display: inline-block;
+				margin-right: 5px;
+				height: 40px;
+				padding-top:5px; 
+			}
+			.cm-nav .cur
+			{
+				border:1px solid #99cc66;
+			}
+			.cm-det ul
+			{
+				width: 908px;
+				display: none;
+			}
+			.cm-det ul.cur
+			{
+				display: block;
+			}
+			.cm-det ul li
+			{	
+				width: 214px;
+				display: inline-block;
+				margin: 4px;
+				border:1px solid #eee;
+			}
+			.cm-det ul a
+			{
+				display: block;
+				color: #666;
+			}
+			.cm-det ul img
+			{
+				height: 200px;
+			}
+			.cm-det ul span
+			{
+				height: 20px;
+				padding-top: 5px;
+				display: block;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow:ellipsis;
+			}
+
+
+
+
+
+
+
+
+
+
+
 			#mask
 			{
-				display: none;
-				width: 100%;
-				height: 100%;
-				top:0px;
 				position: absolute;
+				display: none;
+				top:0px;
+				height: 100%;
 				background: rgba(255, 255, 255, 0.5);
-				
 			}
 			#login-box
 			{
@@ -194,62 +374,11 @@
 				margin: 8px 0;
 				display:none;
 			}
-			#slider
-			{
-				position: relative;
-				width:700px;
-				height: 302px;
-				margin-left: 200px;
-				overflow: hidden;
-			}
-			#slider ul
-			{
-				width: 3000px;
-				position: absolute;
-				float: left;
-				left: 0px;
-			}
-			#slider ul li
-			{
-				display: inline;
-				list-style: none;
-				float: left;
-			}
-			#slider a
-			{
-				display: block;
-			}
-			#slider img
-			{
-				display: block;
-				width: 700px;
-				height: 302px;
-			}
-			.sibd
-			{
-				position: absolute;
-				left: 600px;
-				top:280px;
-				z-index: 10;
-			}
-			.btn-imgSel
-			{
-				cursor: pointer;
-				text-align: center;
-				width: 20px;
-				height: 20px;
-				display: inline-block;
-				background-color: #DDD;
-				border-radius: 15px;
-			}
-			.sibd .cur
-			{
-				background: #99CC66;
-			}
 		</style>
 
 		<script src="public/js/jquery-1.11.0.js">
 		</script>
+		<script type="text/javascript" src="jquery-1.11.0.js"></script>
 	</head>
 	<body>
 		<div class="page">
@@ -403,10 +532,10 @@
 				</div>
 				<div id="slider">
 					<ul id="slider-list">
-						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
-						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
-						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
-						<li><a herf="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a herf="#"><img src="ad.jpg"/></a></li>
+						<li><a herf="#"><img src="003.png"/></a></li>
+						<li><a herf="#"><img src="ad.jpg"/></a></li>
+						<li><a herf="#"><img src="003.png"/></a></li>
 					</ul>
 					<div class="sibd">
 						<span class="btn-imgSel cur">1</span>
@@ -415,19 +544,265 @@
 						<span class="btn-imgSel">4</span>
 					</div>
 				</div>
+				<div id="news">
+					<div>
+						<h3>Line商城快报</h3>
+						<ol>
+							<li><a href="#">大减价是看见的萨克的的撒kdj萨克斯就是大家</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+							<li><a href="#">大减价</a></li>
+						</ol>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div id="mask">
-			<div id="login-box">
-				<a id="close" href="#">X</a>
-				<div class="lg-form">
-					<p id="error-msg" style="color:red;text-align:center;"></p>
-					密码: <input id="lg-account" type="text" name="account" onfocus="true"/><br/>
-					账号: <input id="lg-psw" type="password" name="password"/><br/>
-					<input id="lg-submit" class="btn-submit" type="submit" value="登陆"/>
+			<div class="comm-show">
+				<div class="cm-b">
+					<div class="cm-nav">
+						<h2>家电</h2>
+						<ul>
+							<li class="cm-title1 cur">电视</li>
+							<li class="cm-title2">电视</li>
+						</ul>
+					</div>
+					<div class="cm-det">
+						<ul class="foot1 cur">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="005.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							
+						</ul>
+						<ul class="foot2">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="cm-b">
+					<div class="cm-nav">
+						<h2>家电</h2>
+						<ul>
+							<li class="cm-title1 cur">电视</li>
+							<li class="cm-title2">电视</li>
+						</ul>
+					</div>
+					<div class="cm-det">
+						<ul class="foot1 cur">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="005.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							
+						</ul>
+						<ul class="foot2">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="cm-b">
+					<div class="cm-nav">
+						<h2>家电</h2>
+						<ul>
+							<li class="cm-title1 cur">电视</li>
+							<li class="cm-title2">电视</li>
+						</ul>
+					</div>
+					<div class="cm-det">
+						<ul class="foot1 cur">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="005.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							
+						</ul>
+						<ul class="foot2">
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+							<li>
+								<a href="#"><img src="com.jpg"/></a>
+								<a href="#"><span>超薄舒适</span></a>
+								<span style="color:#E4393C">￥299.0</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="mask">
+				<div id="login-box">
+					<a id="close" href="#">X</a>
+					<div class="lg-form">
+						<p id="error-msg" style="color:red;text-align:center;"></p>
+						账号: <input id="lg-account" type="text" name="account" onfocus="true"/><br/>
+						密码: <input id="lg-psw" type="password" name="password"/><br/>
+						<input id="lg-submit" class="btn-submit" type="submit" value="登陆"/>
+					</div>
 				</div>
 			</div>
 		</div>
+		
 
 		<script type="text/javascript">
 			startImagePlay();
@@ -517,7 +892,25 @@
 				setCurBtn();
 				startImagePlay();
 			});
+			//------------------------------商品展示栏tag切换---------------
+			$(".cm-nav li").mouseover(function(){
+			
+				var cIndex = $(this).attr("class").substring(8,10);
+				var pNode = $(this).siblings(".cur")[0];
+				if(pNode){
+					var pIndex = $(pNode).attr("class").substring(8,10);			
+					$(pNode).attr("class","cm-title"+pIndex);
+					$(this).attr("class","cm-title"+cIndex+" cur");
 
+					var parentN = $(this).parents(".cm-nav")[0];
+					var detDiv = $(parentN).next();
+					
+					var pDetNode = $(detDiv).find(".cur")[0];
+					var cDetNode = $(detDiv).find(".foot"+cIndex)[0];
+					$(pDetNode).attr("class","foot"+pIndex);
+					$(cDetNode).attr("class","foot"+cIndex+" cur");
+				}
+			});
 			//Ajax 登陆
 			$("#lg-submit").click(
 				function (){

@@ -6,7 +6,11 @@ import com.line.web.model.Plate;
 
 public interface PlateDao {
 	
-	public List<Plate> getTopLevelPlate();
+	public void save(Plate plate);
 	
-	public void savePlate(Plate plate);
+	public List<Plate> getByShowSeq(String pid,int count);
+	
+	public void del(String plateId);
+	
+	public void update(Plate plate);
 }
