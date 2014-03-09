@@ -8,9 +8,6 @@ public interface AppDataService {
 	
 	public void initData();
 	
-	//public List<Plate> getTopLevelPlate();
-	
 	public List<PlateInfo> getIndexPlateInfo();
 	
-//	public List<>
 }

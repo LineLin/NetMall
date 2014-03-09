@@ -18,12 +18,6 @@ public class AppDataServiceImpl implements AppDataService {
 	@Autowired
 	private PlateDao plateDao;
 	
-	private final int COUNT_OF_FIRST_LEVEL_PLATE = 8;
-	
-	private final int COUNT_OF_SECOND_LEVEL_PLATE = 8;
-	
-	private final int COUNT_OF_THIRD_LEVEL_PLATE = 8;
-	
 	/**
 	 * 功能：得到商场主页的板块信息。
 	 */
@@ -31,38 +25,59 @@ public class AppDataServiceImpl implements AppDataService {
 	@Override
 	public List<PlateInfo> getIndexPlateInfo() {
 		
-		List<Plate> tPList = plateDao.getByShowSeq(null,COUNT_OF_FIRST_LEVEL_PLATE);
+		List<Plate> tPList = plateDao.getByShowSeq(null,getPlateShowCount(1));
 		List<PlateInfo> platesInfo = new ArrayList<PlateInfo>();
 		if(tPList.isEmpty()){
 			tPList = initPlate();
-		}else{
-			for(Plate p : tPList){
-				List<Plate> subPlates = plateDao.getByShowSeq(p.getId(),COUNT_OF_SECOND_LEVEL_PLATE);
-				List<PlateInfo> subInfo = new ArrayList<PlateInfo>(); 
-				for(Plate sp : subPlates){
-					List<Plate> thirdPlates = plateDao.getByShowSeq(sp.getId(),COUNT_OF_THIRD_LEVEL_PLATE);
-					List<PlateInfo> thirdInfo = new ArrayList<PlateInfo>();
-					for(Plate tp : thirdPlates){
-						PlateInfo temp = new PlateInfo();
-						temp.setLinkPrefix("third");
-						temp.setPlate(tp);
-						temp.setSubPlate(null);
-						thirdInfo.add(temp);
-					}
-					PlateInfo s = new PlateInfo();
-					s.setPlate(sp);
-					s.setSubPlate(thirdInfo);
-					s.setLinkPrefix("second");
-					subInfo.add(s);
-				}
-				PlateInfo pInfo = new PlateInfo();
-				pInfo.setPlate(p);
-				pInfo.setSubPlate(subInfo);
-				pInfo.setLinkPrefix("first");
-				platesInfo.add(pInfo);
-			}
+		}
+		for(Plate p : tPList){
+			PlateInfo info = new PlateInfo(p);
+			info.setLinkPrefix(getLinkPrefix(p));
+			info.setSubPlate(getSubPlateInfo(p));
+			platesInfo.add(info);
 		}
 		return platesInfo;
+	}
+	
+	/**
+	 * 功能：由父板块得到子版块的页面展示信息列表
+	 * @param plate 父板块
+	 * @return 子板块信息列表
+	 */
+	public List<PlateInfo> getSubPlateInfo(Plate plate){
+		List<Plate> subPlates = (List<Plate>) plateDao.getByShowSeq(plate.getId(),getPlateShowCount(plate.getLevel()+1));
+		List<PlateInfo> pInfo = new ArrayList<PlateInfo>();
+		
+		if(!subPlates.isEmpty()){
+			for(Plate p : subPlates){
+				PlateInfo info = new PlateInfo();
+				info.setPlate(p);
+				info.setLinkPrefix(getLinkPrefix(p));
+				info.setSubPlate(getSubPlateInfo(p));
+				pInfo.add(info);
+			}
+			return pInfo;
+		}
+		return null;
+	}
+	
+	/**
+	 * 功能：取得板块在前台显示链接的前缀
+	 * @param p
+	 * @return
+	 */
+	public String getLinkPrefix(Plate p){
+		
+		return null;
+	}
+	
+	/**
+	 * 功能：取得要某级板块的显示个数
+	 * @param level 板块级数
+	 * @return
+	 */
+	public int getPlateShowCount(int level){
+		return 8;
 	}
 	
 	/**
@@ -73,7 +88,10 @@ public class AppDataServiceImpl implements AppDataService {
 		initPlate();
 	}	
 	
-	//初始化板块
+	/**
+	 * 功能：初始化板块
+	 * @return
+	 */
 	private List<Plate> initPlate(){
 		List<Plate> plates = new ArrayList<>();
 		String[] pNames = {"家具","珠宝","服装","图书","电子商品"};
@@ -82,6 +100,11 @@ public class AppDataServiceImpl implements AppDataService {
 			plate.setName(pNames[i]);
 			plate.setLevel(1);
 			plateDao.save(plate);
+//			Plate splate = new Plate();
+//			splate.setName("子"+pNames[i]);
+//			splate.setLevel(2);
+//			splate.setParentPlate(plate);
+//			plateDao.save(splate);
 			plates.add(plate);
 		}
 		return plates;

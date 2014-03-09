@@ -15,11 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="plate")
-public class Plate {
-	
-	public Plate(String id) {
-		this.id = id;
-	}
+public class Plate {	
 
 	public Plate() {
 	}
@@ -42,7 +38,6 @@ public class Plate {
 		return parentPlate;
 	}
 	
-	@Column(name="pid")
 	public void setParentPlate(Plate parentPlate) {
 		this.parentPlate = parentPlate;
 	}
@@ -78,7 +73,7 @@ public class Plate {
 	public int getLevel() {
 		return level;
 	}
-
+	
 	public void setLevel(int level) {
 		this.level = level;
 	}

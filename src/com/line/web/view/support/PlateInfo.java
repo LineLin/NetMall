@@ -10,6 +10,12 @@ public class PlateInfo {
 	private String linkPrefix;
 	
 	private List<PlateInfo> subPlate;
+	
+	public PlateInfo(){}
+	
+	public PlateInfo(Plate plate){
+		this.plate = plate;
+	}
 
 	public Plate getPlate() {
 		return plate;

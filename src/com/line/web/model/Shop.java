@@ -41,11 +41,11 @@ public class Shop {
 	}
 	
 	@OneToOne
-	@Column(name="boss")
 	public User getShopKeeper() {
 		return shopKeeper;
 	}
 	
+	@Column(name="boss")
 	public void setShopKeeper(User shopKeeper) {
 		this.shopKeeper = shopKeeper;
 	}

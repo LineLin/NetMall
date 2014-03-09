@@ -30,7 +30,7 @@ public class PlateDaoImpl implements PlateDao {
 		if(pid == null){
 			hql = "select p from Plate p where p.level = 1 order by p.showSeq";
 		}else{
-			hql = "select p from Plate p where p.pid ='" + pid
+			hql = "select p from Plate p where p.parentPlate ='" + pid
 					+"' order by p.showSeq";
 		}
 		
