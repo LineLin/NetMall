@@ -9,7 +9,9 @@ public class PlateInfo {
 	
 	private String linkPrefix;
 	
-	private List<PlateInfo> subPlate;
+	private List<PlateInfo> subPlates;
+	
+	private int listSize;
 	
 	public PlateInfo(){}
 	
@@ -33,12 +35,25 @@ public class PlateInfo {
 		this.linkPrefix = linkPrefix;
 	}
 
-	public List<PlateInfo> getSubPlate() {
-		return subPlate;
+	public List<PlateInfo> getSubPlates() {
+		return subPlates;
 	}
 
-	public void setSubPlate(List<PlateInfo> subPlate) {
-		this.subPlate = subPlate;
+	public void setSubPlates(List<PlateInfo> subPlates) {
+		this.subPlates = subPlates;
+		if(subPlates != null){
+			this.listSize = subPlates.size();
+		}else{
+			this.listSize = 0;
+		}
+	}
+
+	public int getListSize() {
+		return listSize;
+	}
+
+	public void setListSize(int listSize) {
+		this.listSize = listSize;
 	}	
 	
 }

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE HTML>
+﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Line</title>
@@ -141,7 +144,7 @@
 			}
 			.l-subitem,.r-subitem
 			{
-				display: inline-block;
+				display: inline-table;
 				margin-right: 10px;
 				padding: 20px 0px 10px 10px;
 				width: 327px;
@@ -320,6 +323,7 @@
 			}
 			.cm-det ul img
 			{
+				width:100%;
 				height: 200px;
 			}
 			.cm-det ul span
@@ -396,129 +400,35 @@
 						<h2><a href="">全部商品分类</a></h2>
 					</div>
 					<div class="category-bd">
+						<c:forEach items="${pLists}" var="p">
 						<div class="category-item">
 							<h3>
-								<a href="">商品</a>
-								<a href="">商品</a>
-								<a href="">商品</a>
+								<a href="itemlist/${p.linkPrefix}/${p.plate.id}">${p.plate.name}</a>
 							</h3>
 							<div>
 								<ul class="l-subitem">
+								<c:forEach items="${p.subPlates}" var="sp" begin="0" end="${p.listSize/2-1+0.5}">
 									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
+										<h4><a href="itemlist/${sp.linkPrefix}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<c:forEach items="${sp.subPlates}" var="tp">
+										<a href="itemlist/${tp.linkPrefix}/${tp.plate.id}">${tp.plate.name}</a>
+										</c:forEach>
 									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
+								</c:forEach>
 								</ul>
 								<ul class="r-subitem">
+								<c:forEach items="${p.subPlates}" var="sp" begin="${p.listSize/2+0.5}">
 									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
+										<h4><a href="${sp.linkPrefix}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<c:forEach items="${sp.subPlates}" var="tp">
+										<a href="${tp.linkPrefix}/${tp.plate.id}">${tp.plate.name}</a>
+										</c:forEach>
 									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
+								</c:forEach>
 								</ul>
 							</div>
 						</div>
-						<div class="category-item">
-							<h3>
-								<a href="">商品</a>
-								<a href="">商品</a>
-								<a href="">商品</a>
-							</h3>
-							<div>
-								<ul class="l-subitem">
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电sdsd</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-								</ul>
-								<ul class="r-subitem">
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-									<li>
-										<h4>彩电</h4>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-										<a href="">冰箱</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-
+						</c:forEach>
 					</div>
 				</div>
 				<div class="nav">
@@ -532,10 +442,10 @@
 				</div>
 				<div id="slider">
 					<ul id="slider-list">
-						<li><a herf="#"><img src="ad.jpg"/></a></li>
-						<li><a herf="#"><img src="003.png"/></a></li>
-						<li><a herf="#"><img src="ad.jpg"/></a></li>
-						<li><a herf="#"><img src="003.png"/></a></li>
+						<li><a href="#"><img src="ad.jpg"/></a></li>
+						<li><a href="#"><img src="003.png"/></a></li>
+						<li><a href="#"><img src="ad.jpg"/></a></li>
+						<li><a href="#"><img src="003.png"/></a></li>
 					</ul>
 					<div class="sibd">
 						<span class="btn-imgSel cur">1</span>

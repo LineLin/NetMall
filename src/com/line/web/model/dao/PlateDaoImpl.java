@@ -36,7 +36,7 @@ public class PlateDaoImpl implements PlateDao {
 		
 		Query query = sf.getCurrentSession().createQuery(hql);
 		
-		if(count == Integer.MAX_VALUE){
+		if(count != Integer.MAX_VALUE){
 			query.setFetchSize(count);
 		}
 		List<Plate> plates = query.list();

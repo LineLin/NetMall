@@ -10,4 +10,6 @@ public interface PlateService {
 	public List<PlateInfo> getIndexPlateInfo();
 	
 	public List<Plate> initPlate();
+	
+	public Plate getPlate(String id);
 }

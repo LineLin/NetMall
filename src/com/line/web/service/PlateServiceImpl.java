@@ -37,7 +37,7 @@ public class PlateServiceImpl implements PlateService {
 		for(Plate p : tPList){
 			PlateInfo info = new PlateInfo(p);
 			info.setLinkPrefix(getLinkPrefix(p));
-			info.setSubPlate(getSubPlateInfo(p));
+			info.setSubPlates(getSubPlateInfo(p));
 			platesInfo.add(info);
 		}
 		return platesInfo;
@@ -62,7 +62,8 @@ public class PlateServiceImpl implements PlateService {
 				PlateInfo info = new PlateInfo();
 				info.setPlate(p);
 				info.setLinkPrefix(getLinkPrefix(p));
-				info.setSubPlate(getSubPlateInfo(p));
+				//递归构建板块的显示辅助类
+				info.setSubPlates(getSubPlateInfo(p));
 				pInfo.add(info);
 			}
 			return pInfo;
@@ -71,18 +72,40 @@ public class PlateServiceImpl implements PlateService {
 	}
 	
 	/**
+	 * 功能：根据Id找板块
+	 */
+	@Override
+	public Plate getPlate(String id){
+		return plateDao.findById(id);
+	}
+	/**
 	 * 功能：初始化板块
 	 * @return
 	 */
 	@Override
 	public List<Plate> initPlate(){
 		List<Plate> plates = new ArrayList<>();
-		String[] pNames = {"家具","珠宝","服装","图书","电子商品"};
+		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
+		String[][] secondName = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
+								{"翡翠","黄金","白银","砖石","水晶"},
+								{"女装","儿装","男装","大肚装"},
+								{"人文社科","人物传记","教育","文艺","辅导书","儿童书"},
+								{"爽肤水","粉底","睫毛膏","祛痘","面膜","口红"},
+								{"平板","台式电脑","电脑配件","电脑外设"},
+								{"充值","购物"},
+								{"彩票","教育培训","餐饮美食","休闲娱乐","电影演出"}};
 		for(int i=0; i<pNames.length; i++){
 			Plate plate = new Plate();
 			plate.setName(pNames[i]);
 			plate.setLevel(1);
 			plateDao.save(plate);
+			for(int j=0; j<secondName[i].length;j++){
+				Plate p = new Plate();
+				p.setName(secondName[i][j]);
+				p.setParentPlate(plate);
+				p.setLevel(2);
+				plateDao.save(p);
+			}
 			plates.add(plate);
 		}
 		return plates;
