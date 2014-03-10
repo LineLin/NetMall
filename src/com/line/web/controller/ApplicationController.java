@@ -9,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.line.web.model.Plate;
 import com.line.web.model.User;
 import com.line.web.service.AppDataService;
+import com.line.web.view.support.PlateInfo;
 
 @Controller
 public class ApplicationController {
@@ -30,13 +30,11 @@ public class ApplicationController {
 			model.addAttribute("userName","游客");
 		}
 		
-		List<Plate> pList =null;
+		List<PlateInfo> pList;
 		
-		if(pList.isEmpty()){
-			appData.initData();
-		}
+		pList = appData.getIndexPlateInfo();
 		
-		model.addAttribute("pList",pList);
+		model.addAttribute("pLists",pList);
 		
 		return "index";
 	}

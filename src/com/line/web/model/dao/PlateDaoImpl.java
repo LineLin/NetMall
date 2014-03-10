@@ -24,7 +24,7 @@ public class PlateDaoImpl implements PlateDao {
 	 * @param count 取得的板块数
 	 */
 	@Override
-	public List<Plate> getByShowSeq(String pid,int count) {
+	public List<Plate> getPlateOrderByShowSeq(String pid,int count) {
 		
 		String hql;
 		if(pid == null){
@@ -59,6 +59,14 @@ public class PlateDaoImpl implements PlateDao {
 	@Override
 	public void update(Plate plate){
 		sf.getCurrentSession().update(plate);
+	}
+
+	@Override
+	public Plate findById(String id) {
+		
+		return (Plate) sf.getCurrentSession().createQuery("select p from Plate p where p.id=?1")
+				.setParameter("1",id)
+				.uniqueResult();
 	}
 	
 }

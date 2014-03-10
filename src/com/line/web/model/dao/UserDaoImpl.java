@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
 	 * 功能：通过用户的账号和密码查找用户。
 	 */
 	@Override
-	public User findUser(String account,String password){
+	public User findByAccountAndPsw(String account,String password){
 		
 		User user = (User) sf.getCurrentSession()
 					.createQuery("from User u where u.account =?1 and u.password =?2")
@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 	 * @param account 用户的账号
 	 */
 	@Override
-	public User findUserByAccount(String account) {
+	public User findByAccount(String account) {
 		
 		User user = (User) sf.getCurrentSession()
 				.createQuery("from User u where u.account = ?1")
@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
 	 * @param user 要添加的用户
 	 */
 	@Override
-	public void saveUser(User user) {
+	public void save(User user) {
 		
 		sf.getCurrentSession().save(user);
 	}
@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao {
 	 * 查询所有的用户
 	 */
 	@Override
-	public List<User> allUser() {
+	public List<User> all() {
 		
 		List<User> users =  sf.getCurrentSession()
 							.createQuery("from User")
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
 	 * 更新用户的信息
 	 */
 	@Override
-	public void updataUserImfo(User user) {
+	public void updata(User user) {
 		sf.getCurrentSession().update(user);
 	}
 	

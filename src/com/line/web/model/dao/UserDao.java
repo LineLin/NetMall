@@ -7,13 +7,13 @@ import com.line.web.model.User;
 public interface UserDao {
 	
 	
-	public User findUser(String account,String password);
+	public User findByAccountAndPsw(String account,String password);
 	
-	public User findUserByAccount(String account);
+	public User findByAccount(String account);
 	
-	public void saveUser(User user);
+	public void save(User user);
 	
-	public List<User> allUser();
+	public List<User> all();
 	
-	public void updataUserImfo(User user);
+	public void updata(User user);
 }

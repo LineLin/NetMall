@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 	 */
 	public User verification(String account,String password){
 		
-		User user = userDao.findUser(account, password);
+		User user = userDao.findByAccountAndPsw(account, password);
 		
 		return user;
 	}
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
 	
 	public boolean isUserExist(String account){
 		
-		User user = userDao.findUserByAccount(account);
+		User user = userDao.findByAccount(account);
 		
 		if(user == null){
 			return false;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
 	
 	public void saveUser(User user){
 		
-		userDao.saveUser(user);
+		userDao.save(user);
 	}
 	
 }
