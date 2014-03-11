@@ -19,7 +19,6 @@ public class PlateController {
 	@RequestMapping("/itemlist/second/{id}")
 	public String showSecondPlate(@PathVariable("id") String plateId,ModelMap model){
 		Plate p = plateService.getPlate(plateId);
-//		p.s
 		return null;
 	}
 }
