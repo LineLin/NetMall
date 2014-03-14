@@ -10,6 +10,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
@@ -19,46 +20,51 @@ final public class SysSetting {
 	
 	private static SAXReader reader = new SAXReader();
 	
+	private static OutputFormat format = OutputFormat.createPrettyPrint();
+	
 	private static XMLWriter writer;
 	//顶级板块展示的个数
-	private static AtomicInteger topLevelPlateCount;
+	private static AtomicInteger topLevelPlateCount = new AtomicInteger();
 	//二级板块展示的个数
-	private static AtomicInteger secondLevelPlateCount;
+	private static AtomicInteger secondLevelPlateCount = new AtomicInteger();
 	//三级板块展示的个数
-	private static AtomicInteger thirdLevelPlateCount;
+	private static AtomicInteger thirdLevelPlateCount = new AtomicInteger();
 	//主页每个栏目下展示的商品的数目
-	private static AtomicInteger indexCommodityCount;
+	private static AtomicInteger indexCommodityCount = new AtomicInteger();
 	
 	public static void init(){
 		File file = new File(SysSetting.FILE_NAME);
 		Document doc;
 		Element count;
+		format.setNewlines(true);
 		if(!file.exists()){
-			file.mkdir();
-		    doc = DocumentHelper.createDocument();
-		    doc.setXMLEncoding("uft8");
-			Element root = doc.addElement("config");
-			Element index = root.addElement("index");
-			Element plates = index.addElement("plates");
-			Element top = plates.addElement("plate");
-			top.addAttribute("level","1");
-			count = top.addElement("count");
-			count.setText("8");
-			Element second = plates.addElement("plate");
-			second.addAttribute("level", "2");
-			count = second.addElement("count");
-			count.setText("8");
-			Element third = plates.addElement("plate");
-			third.addAttribute("levle","3");
-			count = third.addElement("count");
-			count.setText("8");
-			Element commodity = index.addElement("commodity");
-			count = commodity.addElement("count");
-			count.setText("8");
 			try {
-				writer = new XMLWriter(new FileWriter(file));
+				file.createNewFile();
+				doc = DocumentHelper.createDocument();
+			    doc.setXMLEncoding("uft8");
+				Element root = doc.addElement("config");
+				Element index = root.addElement("index");
+				Element plates = index.addElement("plates");
+				Element top = plates.addElement("plate");
+				top.addAttribute("level","1");
+				count = top.addElement("count");
+				count.setText("8");
+				Element second = plates.addElement("plate");
+				second.addAttribute("level", "2");
+				count = second.addElement("count");
+				count.setText("8");
+				Element third = plates.addElement("plate");
+				third.addAttribute("level","3");
+				count = third.addElement("count");
+				count.setText("8");
+				Element commodity = index.addElement("commodity");
+				count = commodity.addElement("count");
+				count.setText("8");
+	            format.setNewlines(true);
+				writer = new XMLWriter(new FileWriter(file),format);
 				writer.write(doc);
 				writer.close();
+				
 				topLevelPlateCount = secondLevelPlateCount = thirdLevelPlateCount = new AtomicInteger(8);
 				indexCommodityCount = new AtomicInteger(8);
 			} catch (IOException e) {
@@ -69,6 +75,7 @@ final public class SysSetting {
 				doc = reader.read(file);
 				List<Element> plateNodes = (List<Element>)doc.selectNodes("/config/index/plates/plate");
 				for(Element e : plateNodes){
+					 System.out.println(e.attributeValue("level"));
 					 int level = Integer.valueOf(e.attributeValue("level"));
 					 int c = Integer.valueOf(e.element("count").getText());
 					 switch(level){
@@ -83,7 +90,6 @@ final public class SysSetting {
 			} catch (DocumentException e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
 	private static void updatePlateCount(String level,int newValue){
@@ -92,7 +98,7 @@ final public class SysSetting {
 			Document doc = reader.read(file);
 			Element e = (Element)doc.selectSingleNode("/config/index/plates/plate[@level=+"+level+"]");
 			e.element("count").setText(String.valueOf(newValue));
-			writer = new XMLWriter(new FileWriter(file));
+			writer = new XMLWriter(new FileWriter(file),format);
 			writer.write(doc);
 			writer.close();
 		}catch (DocumentException | IOException e) {
@@ -104,9 +110,9 @@ final public class SysSetting {
 		try {
 			File file = new File(SysSetting.FILE_NAME);
 			Document doc = reader.read(file);
-			Element e = (Element)doc.selectSingleNode("/config/index/commodity");
+			Element e = (Element)doc.selectSingleNode("config/index/commodity");
 			e.element("count").setText(String.valueOf(newValue));
-			writer = new XMLWriter(new FileWriter(file));
+			writer = new XMLWriter(new FileWriter(file),format);
 			writer.write(doc);
 			writer.close();
 		}catch (DocumentException | IOException e) {
@@ -147,6 +153,11 @@ final public class SysSetting {
 	public static void setIndexCommodityCount(int newValue) {
 		updataIndexCommodityCount(newValue);
 		SysSetting.indexCommodityCount.set(newValue);
+	}
+	
+	public static void main(String[] args){
+		init();
+		setIndexCommodityCount(10);
 	}
 
 }
