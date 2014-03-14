@@ -12,6 +12,7 @@ import com.line.web.view.support.PlateInfo;
 @Transactional
 public class AppDataServiceImpl implements AppDataService {
 	
+	public static final String COMMODITY_DEFAULT_PROPERTY = "sales";
 	@Autowired
 	private PlateService plateService;
 	/**
@@ -25,5 +26,12 @@ public class AppDataServiceImpl implements AppDataService {
 	@Override
 	public List<PlateInfo> getIndexPlateInfo(){
 		return plateService.getIndexPlateInfo();
+	}
+	
+	public List<PlateInfo> getCommoShowList(List<PlateInfo>list,String property){
+		if(property == null){
+			property = AppDataServiceImpl.COMMODITY_DEFAULT_PROPERTY;
+		}
+		return plateService.getPopularCommodity(list, property, 8);
 	}
 }

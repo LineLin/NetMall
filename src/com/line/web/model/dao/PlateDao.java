@@ -16,4 +16,6 @@ public interface PlateDao {
 	
 	public Plate findById(String id);
 	
+	public List<Plate> getByPid(String pid);
+	
 }

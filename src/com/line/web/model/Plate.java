@@ -2,6 +2,7 @@ package com.line.web.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -76,7 +77,8 @@ public class Plate {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-
+	
+	@Column(columnDefinition="int default 0")
 	public int getShowSeq() {
 		return showSeq;
 	}

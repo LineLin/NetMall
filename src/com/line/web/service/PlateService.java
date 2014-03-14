@@ -12,4 +12,7 @@ public interface PlateService {
 	public List<Plate> initPlate();
 	
 	public Plate getPlate(String id);
+	
+	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count);
+		
 }

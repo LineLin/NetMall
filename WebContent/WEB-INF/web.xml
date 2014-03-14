@@ -18,4 +18,10 @@
     	<servlet-name>example</servlet-name>
     	<url-pattern>/</url-pattern>
     </servlet-mapping>
+    <listener>
+    	<listener-class>com.line.web.sys.SysSetting</listener-class>
+    </listener>
+    <welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

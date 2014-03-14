@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 import com.line.web.model.dao.CommodityDao;
 import com.line.web.model.dao.PlateDao;
@@ -20,7 +21,7 @@ public class PlateServiceImpl implements PlateService {
 	private PlateDao plateDao;
 	
 	@Autowired
-	private CommodityDao comDao;
+	private CommodityDao commodityDao;
 	
 	/**
 	 * 功能：得到商场主页的板块信息。
@@ -54,6 +55,10 @@ public class PlateServiceImpl implements PlateService {
 	 * @return 子板块信息列表
 	 */
 	public List<PlateInfo> getSubPlateInfo(Plate plate){
+		
+		if(plate.getLevel() > 3){
+			return null;
+		}
 		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(plate.getLevel()+1));
 		List<PlateInfo> pInfo = new ArrayList<PlateInfo>();
 		
@@ -133,5 +138,41 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	private int getPlateShowCount(int level){
 		return 8;
+	}
+	
+	/**
+	 * 功能：得到某板块下的叶子板块，并将叶子板块放在list列表中
+	 * @param p 父板块
+	 * @param list 叶子板块存储列表
+	 */
+	private void getLeafPlate(Plate p,List<Plate> list){
+		
+		List<Plate> childs = plateDao.getByPid(p.getId());
+		
+		if(childs.isEmpty()){
+			list.add(p);
+			return;
+		}else{
+			for(Plate cp : childs){
+				getLeafPlate(cp,list);
+			}
+		}
+	}
+	/**
+	 * 功能：取得某板块下在要展示的商品
+	 * @param list 板块展示列表
+	 * @param property 排序的属性
+	 * @param count 取得的商品数量
+	 */
+	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count){
+		for(PlateInfo p : list){
+			for(PlateInfo sp : p.getSubPlates()){
+				List<Plate> leafPlates = new ArrayList<Plate>();
+				getLeafPlate(sp.getPlate(),leafPlates);
+				List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
+				sp.setCommodities(commodities);
+			}
+		}
+		return list;
 	}
 }

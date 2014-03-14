@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService{
 	 */
 	
 	public boolean isUserExist(String account){
-		
 		User user = userDao.findByAccount(account);
 		
 		if(user == null){

@@ -1,6 +1,8 @@
 package com.line.web.view.support;
 
 import java.util.List;
+
+import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 
 public class PlateInfo {
@@ -10,6 +12,8 @@ public class PlateInfo {
 	private String linkPrefix;
 	
 	private List<PlateInfo> subPlates;
+	
+	private List<Commodity> commodities;
 	
 	private int listSize;
 	
@@ -54,6 +58,14 @@ public class PlateInfo {
 
 	public void setListSize(int listSize) {
 		this.listSize = listSize;
+	}
+
+	public List<Commodity> getCommodities() {
+		return commodities;
+	}
+
+	public void setCommodities(List<Commodity> commodities) {
+		this.commodities = commodities;
 	}	
 	
 }

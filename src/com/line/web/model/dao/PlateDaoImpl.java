@@ -68,5 +68,12 @@ public class PlateDaoImpl implements PlateDao {
 				.setParameter("1",id)
 				.uniqueResult();
 	}
+
+	@Override
+	public List<Plate> getByPid(String pid) {
+		return sf.getCurrentSession().createQuery("select p from Plate p.parentPlate =?1")
+				.setParameter("1",pid)
+				.list();
+	}
 	
 }
