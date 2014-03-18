@@ -1,5 +1,7 @@
 package com.line.web.model;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.hibernate.Session;
@@ -35,6 +37,35 @@ public class CommodityTest extends TestCase {
 		}
 	}
 	
+	public void testAddWithPlate(){
+		String[] images = {"003.png","005.jpg","com.jpg","ad.jpg"};
+		try{
+			Session session = HibernateUtil.getSession();
+			String hql = "select p from Plate p where p.level=3";
+			session.beginTransaction();
+			List<Plate> lists = (List<Plate>) session.createQuery(hql).list();
+			for(Plate p : lists){
+				int i = 5;
+				while(i-- != 0){
+					Commodity comm = new Commodity();
+					comm.setName("风衣");
+					comm.setDescription("超薄舒适");
+					comm.setPrice(299.9);
+					comm.setEnjoinPlate(p);
+					int r =(int) (Math.random() * 3) + 1;
+					comm.setImage("public/img/" + images[r]);
+					session.save(comm);
+				}
+			}
+			session.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}finally{
+			HibernateUtil.close(session);
+		}
+	}
+	
 	public void testGetCom(){
 		
 		try{
@@ -43,7 +74,7 @@ public class CommodityTest extends TestCase {
 			
 			Commodity com = (Commodity) session.createQuery("from Commodity com where com.name = ? ")
 						.setParameter(0, "猪肉")
-						.uniqueResult();
+						.list().get(0);
 			assertNotNull(com);
 			assertEquals(com.getName(),"猪肉");
 			assertEquals(com.getEnjoinShop().getName(),"Line");

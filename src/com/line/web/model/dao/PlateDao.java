@@ -10,11 +10,13 @@ public interface PlateDao {
 	
 	public List<Plate> getPlateOrderByShowSeq(String pid,int count);
 	
+	public List<Plate> getByLevel(int level);
+	
 	public void del(String plateId);
 	
 	public void update(Plate plate);
 	
-	public Plate findById(String id);
+	public Plate getById(String id);
 	
 	public List<Plate> getByPid(String pid);
 	

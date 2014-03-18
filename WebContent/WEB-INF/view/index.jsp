@@ -314,7 +314,7 @@
 				width: 214px;
 				display: inline-block;
 				margin: 4px;
-				border:1px solid #eee;
+				
 			}
 			.cm-det ul a
 			{
@@ -323,6 +323,7 @@
 			}
 			.cm-det ul img
 			{
+				border:1px solid #eee;
 				width:100%;
 				height: 200px;
 			}
@@ -382,7 +383,6 @@
 
 		<script src="public/js/jquery-1.11.0.js">
 		</script>
-		<script type="text/javascript" src="jquery-1.11.0.js"></script>
 	</head>
 	<body>
 		<div class="page">
@@ -442,10 +442,10 @@
 				</div>
 				<div id="slider">
 					<ul id="slider-list">
-						<li><a href="#"><img src="ad.jpg"/></a></li>
-						<li><a href="#"><img src="003.png"/></a></li>
-						<li><a href="#"><img src="ad.jpg"/></a></li>
-						<li><a href="#"><img src="003.png"/></a></li>
+						<li><a href="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a href="#"><img src="public/img/003.png"/></a></li>
+						<li><a href="#"><img src="public/img/ad.jpg"/></a></li>
+						<li><a href="#"><img src="public/img/003.png"/></a></li>
 					</ul>
 					<div class="sibd">
 						<span class="btn-imgSel cur">1</span>
@@ -471,234 +471,36 @@
 				</div>
 			</div>
 			<div class="comm-show">
+			<c:forEach items="${pLists}" var="p">
 				<div class="cm-b">
 					<div class="cm-nav">
-						<h2>家电</h2>
+						<h2>${p.plate.name}</h2>
 						<ul>
-							<li class="cm-title1 cur">电视</li>
-							<li class="cm-title2">电视</li>
+							<c:forEach items="${p.subPlates}" var="sp" begin="0" end="4" varStatus="status">
+								<c:if test="${status.count == 1}">
+								<li class="cm-title${status.count} cur"><a href="itemlist/${sp.linkPrefix}">${sp.plate.name}</a></li>
+								</c:if>
+								<c:if test="${status.count != 1}">
+								<li class="cm-title${status.count}"><a href="itemlist/${sp.linkPrefix}">${sp.plate.name}</a></li>
+								</c:if>
+							</c:forEach>
 						</ul>
 					</div>
 					<div class="cm-det">
-						<ul class="foot1 cur">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="005.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							
-						</ul>
-						<ul class="foot2">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-						</ul>
+						<c:forEach items="${ p.subPlates }" var="sp" varStatus="status">
+							<ul class="foot${status.count} ${status.count == 1 ? 'cur':''}">
+								<c:forEach items="${sp.commodities}" var ="commodity">
+									<li>
+										<a href="#"><img src="${commodity.image}"/></a>
+										<a href="#"><span>${commodity.description}</span></a>
+										<span style="color:#E4393C">￥${commodity.price}</span>
+									</li>
+								</c:forEach>
+							</ul>
+						</c:forEach>
 					</div>
 				</div>
-				<div class="cm-b">
-					<div class="cm-nav">
-						<h2>家电</h2>
-						<ul>
-							<li class="cm-title1 cur">电视</li>
-							<li class="cm-title2">电视</li>
-						</ul>
-					</div>
-					<div class="cm-det">
-						<ul class="foot1 cur">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="005.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							
-						</ul>
-						<ul class="foot2">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="cm-b">
-					<div class="cm-nav">
-						<h2>家电</h2>
-						<ul>
-							<li class="cm-title1 cur">电视</li>
-							<li class="cm-title2">电视</li>
-						</ul>
-					</div>
-					<div class="cm-det">
-						<ul class="foot1 cur">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="005.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							
-						</ul>
-						<ul class="foot2">
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-							<li>
-								<a href="#"><img src="com.jpg"/></a>
-								<a href="#"><span>超薄舒适</span></a>
-								<span style="color:#E4393C">￥299.0</span>
-							</li>
-						</ul>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div id="mask">
 				<div id="login-box">

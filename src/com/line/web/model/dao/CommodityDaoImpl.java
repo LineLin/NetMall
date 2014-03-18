@@ -75,11 +75,11 @@ public class CommodityDaoImpl implements CommodityDao {
 	@Override
 	public List<Commodity> getByPlates(List<Plate> plates, String property,int count,
 			boolean isDesc) {
-		String hql = "select c from Commodity c where c.enjoinPlate = ";
+		String hql = "select c from Commodity c where c.enjoinPlate in ( ";
 		for(Plate p : plates){
-			hql += "'" + p.getId() + "'";
+			hql += "'" + p.getId() + "',";
 		}
-		hql += "order by c."+property;
+		hql = hql.substring(0, hql.lastIndexOf(",")) + ") order by c."+property;
 		if(isDesc){
 			hql += "desc"; 
 		}

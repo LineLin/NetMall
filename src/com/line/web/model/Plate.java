@@ -19,6 +19,16 @@ public class Plate {
 
 	public Plate() {
 	}
+	
+	public Plate(String name,int level,int showSeq){
+		this(name,level);
+		this.showSeq = showSeq;
+	}
+	
+	public Plate(String name,int level){
+		this.name = name;
+		this.level = level;
+	}
 
 	private String id;
 	

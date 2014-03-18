@@ -62,17 +62,24 @@ public class PlateDaoImpl implements PlateDao {
 	}
 
 	@Override
-	public Plate findById(String id) {
+	public Plate getById(String id) {
 		
-		return (Plate) sf.getCurrentSession().createQuery("select p from Plate p where p.id=?1")
+		return (Plate) sf.getCurrentSession().createQuery("select p from Plate p where p.id = ?1")
 				.setParameter("1",id)
 				.uniqueResult();
 	}
 
 	@Override
 	public List<Plate> getByPid(String pid) {
-		return sf.getCurrentSession().createQuery("select p from Plate p.parentPlate =?1")
-				.setParameter("1",pid)
+		return sf.getCurrentSession().createQuery("select p from Plate p where p.parentPlate = '" + pid + "'")
+//				.setParameter("pid",pid)
+				.list();
+	}
+
+	@Override
+	public List<Plate> getByLevel(int level) {
+		return sf.getCurrentSession().createQuery("select p from Plate p where p.level =?1")
+				.setParameter("1",level)
 				.list();
 	}
 	

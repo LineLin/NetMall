@@ -11,11 +11,22 @@ import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 import com.line.web.model.dao.CommodityDao;
 import com.line.web.model.dao.PlateDao;
+import com.line.web.sys.SysSetting;
 import com.line.web.view.support.PlateInfo;
 
 @Service
 @Transactional
 public class PlateServiceImpl implements PlateService {
+	
+	private final int TOP_PLATE = 1;
+	
+	private final String TOP_PLATE_SHOW_LINK_PREFIX = "first";
+	
+	private final String SECOND_PLATE_SHOW_LINK_PREFIX = "second";
+	
+	private final String THIRD_PLATE_SHOW_LINK_PREFIX = "third";
+	
+	private final String DEFAULT_PLATE_SHOW_LINK_PREFIX = "";
 	
 	@Autowired
 	private PlateDao plateDao;
@@ -30,7 +41,7 @@ public class PlateServiceImpl implements PlateService {
 	@Override
 	public List<PlateInfo> getIndexPlateInfo() {
 		
-		List<Plate> tPList = plateDao.getPlateOrderByShowSeq(null,getPlateShowCount(1));
+		List<Plate> tPList = plateDao.getPlateOrderByShowSeq(null,getPlateShowCount(TOP_PLATE));
 		List<PlateInfo> platesInfo = new ArrayList<PlateInfo>();
 		if(tPList.isEmpty()){
 			tPList = initPlate();
@@ -45,7 +56,7 @@ public class PlateServiceImpl implements PlateService {
 	}
 	
 	public List<PlateInfo> getSecondPlateInfo(String plateId){
-		Plate p = plateDao.findById(plateId);
+		Plate p = plateDao.getById(plateId);
 		return getSubPlateInfo(p);
 	}
 
@@ -56,7 +67,7 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	public List<PlateInfo> getSubPlateInfo(Plate plate){
 		
-		if(plate.getLevel() > 3){
+		if(plate.getLevel() >= 3){
 			return null;
 		}
 		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(plate.getLevel()+1));
@@ -81,8 +92,73 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	@Override
 	public Plate getPlate(String id){
-		return plateDao.findById(id);
+		return plateDao.getById(id);
+	}	
+	/**
+	 * 功能：取得板块在前台显示链接的前缀
+	 * @param p
+	 * @return
+	 */
+	private String getLinkPrefix(Plate p){
+		switch(p.getLevel()){
+			case 1: return TOP_PLATE_SHOW_LINK_PREFIX;
+			case 2: return SECOND_PLATE_SHOW_LINK_PREFIX;
+			case 3: return THIRD_PLATE_SHOW_LINK_PREFIX;
+			default:return DEFAULT_PLATE_SHOW_LINK_PREFIX;
+		}
 	}
+	
+	/**
+	 * 功能：取得要某级板块的显示个数
+	 * @param level 板块级数
+	 * @return
+	 */
+	private int getPlateShowCount(int level){
+		int count;
+		switch(level){
+		case 1: count = SysSetting.getThirdLevelPlateCount(); break;
+		case 2: count =  SysSetting.getSecondLevelPlateCount(); break;
+		case 3: count =  SysSetting.getThirdLevelPlateCount(); break;
+		default: count = 8;
+		}
+		return count;
+	}
+	
+	/**
+	 * 功能：得到某板块下的叶子板块，并将叶子板块放在list列表中
+	 * @param p 父板块
+	 * @param list 叶子板块存储列表
+	 */
+	private void getLeafPlate(Plate p,List<Plate> list){
+		
+		List<Plate> childs = plateDao.getByPid(p.getId());
+		if(childs.isEmpty()){
+			list.add(p);
+			return;
+		}else{
+			for(Plate cp : childs){
+				getLeafPlate(cp,list);
+			}
+		}
+	}
+	/**
+	 * 功能：取得某板块下在要展示的商品
+	 * @param list 板块展示列表
+	 * @param property 排序的属性
+	 * @param count 取得的商品数量
+	 */
+	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count){
+		for(PlateInfo p : list){
+			for(PlateInfo sp : p.getSubPlates()){
+				List<Plate> leafPlates = new ArrayList<Plate>();
+				getLeafPlate(sp.getPlate(),leafPlates);
+				List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
+				sp.setCommodities(commodities);
+			}
+		}
+		return list;
+	}
+	
 	/**
 	 * 功能：初始化板块
 	 * @return
@@ -115,64 +191,18 @@ public class PlateServiceImpl implements PlateService {
 		}
 		return plates;
 	}
+
 	
-	
-	/**
-	 * 功能：取得板块在前台显示链接的前缀
-	 * @param p
-	 * @return
-	 */
-	private String getLinkPrefix(Plate p){
-		switch(p.getLevel()){
-			case 1: return "first";
-			case 2: return "second";
-			case 3: return "third";
-			default:return "";
-		}
-	}
-	
-	/**
-	 * 功能：取得要某级板块的显示个数
-	 * @param level 板块级数
-	 * @return
-	 */
-	private int getPlateShowCount(int level){
-		return 8;
-	}
-	
-	/**
-	 * 功能：得到某板块下的叶子板块，并将叶子板块放在list列表中
-	 * @param p 父板块
-	 * @param list 叶子板块存储列表
-	 */
-	private void getLeafPlate(Plate p,List<Plate> list){
-		
-		List<Plate> childs = plateDao.getByPid(p.getId());
-		
-		if(childs.isEmpty()){
-			list.add(p);
-			return;
-		}else{
-			for(Plate cp : childs){
-				getLeafPlate(cp,list);
-			}
-		}
-	}
-	/**
-	 * 功能：取得某板块下在要展示的商品
-	 * @param list 板块展示列表
-	 * @param property 排序的属性
-	 * @param count 取得的商品数量
-	 */
-	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count){
-		for(PlateInfo p : list){
-			for(PlateInfo sp : p.getSubPlates()){
-				List<Plate> leafPlates = new ArrayList<Plate>();
-				getLeafPlate(sp.getPlate(),leafPlates);
-				List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
-				sp.setCommodities(commodities);
-			}
-		}
-		return list;
-	}
+	/*-----------------------------临时性修改---------------------------------------------*/
+//	private void addDefaultThirdPlate(){
+//		List<Plate> list = plateDao.getByLevel(2);
+//		for(Plate p : list){
+//			int j = 20;
+//			while(j-- != 0){
+//				Plate temp = new Plate("测试",3);
+//				temp.setParentPlate(p);
+//				plateDao.save(temp);
+//			}
+//		}
+//	}
 }

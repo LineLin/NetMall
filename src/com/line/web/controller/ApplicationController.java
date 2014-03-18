@@ -38,6 +38,8 @@ public class ApplicationController {
 		
 		pList = appData.getIndexPlateInfo();
 		
+		pList = appData.getCommoShowList(pList, null);
+		
 		model.addAttribute("pLists",pList);
 		
 		return "index";

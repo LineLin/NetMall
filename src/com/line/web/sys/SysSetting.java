@@ -23,22 +23,29 @@ final public class SysSetting {
 	private static OutputFormat format = OutputFormat.createPrettyPrint();
 	
 	private static XMLWriter writer;
+	
 	//顶级板块展示的个数
 	private static AtomicInteger topLevelPlateCount = new AtomicInteger();
+	
 	//二级板块展示的个数
 	private static AtomicInteger secondLevelPlateCount = new AtomicInteger();
+	
 	//三级板块展示的个数
 	private static AtomicInteger thirdLevelPlateCount = new AtomicInteger();
+	
 	//主页每个栏目下展示的商品的数目
 	private static AtomicInteger indexCommodityCount = new AtomicInteger();
 	
-	public static void init(){
+	
+	static {
 		File file = new File(SysSetting.FILE_NAME);
 		Document doc;
+		
 		Element count;
 		format.setNewlines(true);
 		if(!file.exists()){
 			try {
+				System.out.println("新建sys.xml文件");
 				file.createNewFile();
 				doc = DocumentHelper.createDocument();
 			    doc.setXMLEncoding("uft8");
@@ -64,7 +71,6 @@ final public class SysSetting {
 				writer = new XMLWriter(new FileWriter(file),format);
 				writer.write(doc);
 				writer.close();
-				
 				topLevelPlateCount = secondLevelPlateCount = thirdLevelPlateCount = new AtomicInteger(8);
 				indexCommodityCount = new AtomicInteger(8);
 			} catch (IOException e) {
@@ -156,7 +162,6 @@ final public class SysSetting {
 	}
 	
 	public static void main(String[] args){
-		init();
 		setIndexCommodityCount(10);
 	}
 
