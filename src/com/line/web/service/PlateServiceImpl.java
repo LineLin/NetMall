@@ -12,21 +12,28 @@ import com.line.web.model.Plate;
 import com.line.web.model.dao.CommodityDao;
 import com.line.web.model.dao.PlateDao;
 import com.line.web.sys.SysSetting;
+import com.line.web.utils.Page;
 import com.line.web.view.support.PlateInfo;
 
 @Service
 @Transactional
 public class PlateServiceImpl implements PlateService {
 	
-	private final int TOP_PLATE = 1;
+	//顶级板块的level
+	private final int TOP_PLATE_LEVEL = 1;
 	
-	private final String TOP_PLATE_SHOW_LINK_PREFIX = "first";
+	//一级板块显示页面的链接地址
+	private final String TOP_PLATE_SHOW_LINK_PATH = "first";
 	
-	private final String SECOND_PLATE_SHOW_LINK_PREFIX = "second";
+	//二级板块显示页面的链接地址
+	private final String SECOND_PLATE_SHOW_LINK_PATH = "second";
 	
-	private final String THIRD_PLATE_SHOW_LINK_PREFIX = "third";
+	//三级板块显示页面的链接地址
+	private final String THIRD_PLATE_SHOW_LINK_PATH = "third";
 	
-	private final String DEFAULT_PLATE_SHOW_LINK_PREFIX = "";
+	private final String DEFAULT_PLATE_SHOW_LINK_PATH = "";
+	
+	private final int INDEX_PLATE_SHOW_DEPTH = 3; 
 	
 	@Autowired
 	private PlateDao plateDao;
@@ -41,23 +48,18 @@ public class PlateServiceImpl implements PlateService {
 	@Override
 	public List<PlateInfo> getIndexPlateInfo() {
 		
-		List<Plate> tPList = plateDao.getPlateOrderByShowSeq(null,getPlateShowCount(TOP_PLATE));
+		List<Plate> tPList = plateDao.getPlateOrderByShowSeq(null,getPlateShowCount(Page.INDEX,TOP_PLATE_LEVEL));
 		List<PlateInfo> platesInfo = new ArrayList<PlateInfo>();
 		if(tPList.isEmpty()){
 			tPList = initPlate();
 		}
 		for(Plate p : tPList){
 			PlateInfo info = new PlateInfo(p);
-			info.setLinkPrefix(getLinkPrefix(p));
-			info.setSubPlates(getSubPlateInfo(p));
+			info.setLinkPath(getLinkPath(p));
+			info.setSubPlates(getSubPlateInfo(p,INDEX_PLATE_SHOW_DEPTH,Page.INDEX));
 			platesInfo.add(info);
 		}
 		return platesInfo;
-	}
-	
-	public List<PlateInfo> getSecondPlateInfo(String plateId){
-		Plate p = plateDao.getById(plateId);
-		return getSubPlateInfo(p);
 	}
 
 	/**
@@ -65,21 +67,21 @@ public class PlateServiceImpl implements PlateService {
 	 * @param plate 父板块
 	 * @return 子板块信息列表
 	 */
-	public List<PlateInfo> getSubPlateInfo(Plate plate){
+	public List<PlateInfo> getSubPlateInfo(Plate plate,int depth,Page page){
 		
-		if(plate.getLevel() >= 3){
+		if(plate.getLevel() >= depth){
 			return null;
 		}
-		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(plate.getLevel()+1));
+		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(page,plate.getLevel()+1));
 		List<PlateInfo> pInfo = new ArrayList<PlateInfo>();
 		
 		if(!subPlates.isEmpty()){
 			for(Plate p : subPlates){
 				PlateInfo info = new PlateInfo();
 				info.setPlate(p);
-				info.setLinkPrefix(getLinkPrefix(p));
+				info.setLinkPath(getLinkPath(p));
 				//递归构建板块的显示辅助类
-				info.setSubPlates(getSubPlateInfo(p));
+				info.setSubPlates(getSubPlateInfo(p,depth,page));
 				pInfo.add(info);
 			}
 			return pInfo;
@@ -93,18 +95,19 @@ public class PlateServiceImpl implements PlateService {
 	@Override
 	public Plate getPlate(String id){
 		return plateDao.getById(id);
-	}	
+	}
+	
 	/**
 	 * 功能：取得板块在前台显示链接的前缀
 	 * @param p
 	 * @return
 	 */
-	private String getLinkPrefix(Plate p){
+	private String getLinkPath(Plate p){
 		switch(p.getLevel()){
-			case 1: return TOP_PLATE_SHOW_LINK_PREFIX;
-			case 2: return SECOND_PLATE_SHOW_LINK_PREFIX;
-			case 3: return THIRD_PLATE_SHOW_LINK_PREFIX;
-			default:return DEFAULT_PLATE_SHOW_LINK_PREFIX;
+			case 1: return TOP_PLATE_SHOW_LINK_PATH;
+			case 2: return SECOND_PLATE_SHOW_LINK_PATH;
+			case 3: return THIRD_PLATE_SHOW_LINK_PATH;
+			default:return DEFAULT_PLATE_SHOW_LINK_PATH;
 		}
 	}
 	
@@ -113,14 +116,8 @@ public class PlateServiceImpl implements PlateService {
 	 * @param level 板块级数
 	 * @return
 	 */
-	private int getPlateShowCount(int level){
+	private int getPlateShowCount(Page page,int level){
 		int count;
-		switch(level){
-		case 1: count = SysSetting.getThirdLevelPlateCount(); break;
-		case 2: count =  SysSetting.getSecondLevelPlateCount(); break;
-		case 3: count =  SysSetting.getThirdLevelPlateCount(); break;
-		default: count = 8;
-		}
 		return count;
 	}
 	
@@ -142,7 +139,7 @@ public class PlateServiceImpl implements PlateService {
 		}
 	}
 	/**
-	 * 功能：取得某板块下在要展示的商品
+	 * 功能：取得list中每个板块下要展示的商品
 	 * @param list 板块展示列表
 	 * @param property 排序的属性
 	 * @param count 取得的商品数量

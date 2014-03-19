@@ -9,7 +9,7 @@ public class PlateInfo {
 	
 	private Plate plate;
 	
-	private String linkPrefix;
+	private String linkPath;
 	
 	private List<PlateInfo> subPlates;
 	
@@ -31,12 +31,12 @@ public class PlateInfo {
 		this.plate = plate;
 	}
 
-	public String getLinkPrefix() {
-		return linkPrefix;
+	public String getLinkPath() {
+		return linkPath;
 	}
 
-	public void setLinkPrefix(String linkPrefix) {
-		this.linkPrefix = linkPrefix;
+	public void setLinkPath(String linkPath) {
+		this.linkPath = linkPath;
 	}
 
 	public List<PlateInfo> getSubPlates() {

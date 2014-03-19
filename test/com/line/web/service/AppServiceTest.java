@@ -31,7 +31,7 @@ public class AppServiceTest {
 	public void print(PlateInfo p){
 		System.out.println("pName --->" + p.getPlate().getName());
 		System.out.println("plevel---->" + p.getPlate().getLevel());
-		System.out.println("linkPrefix---->" + p.getLinkPrefix());
+		System.out.println("linkPrefix---->" + p.getLinkPath());
 		if(p.getSubPlates() != null){
 			for(PlateInfo info : p.getSubPlates()){
 				print(info);

@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.line.web.sys.SysSetting;
+import com.line.web.utils.Page;
 import com.line.web.view.support.PlateInfo;
 
 @Service
 @Transactional
 public class AppDataServiceImpl implements AppDataService {
 	
-	public static final String COMMODITY_DEFAULT_PROPERTY = "sales";
+	public static final String COMMODITY_ORDER_PROPERTY = "sales";
 
 	@Autowired
 	private PlateService plateService;
@@ -27,8 +28,8 @@ public class AppDataServiceImpl implements AppDataService {
 	public List<PlateInfo> getCommoShowList(List<PlateInfo>list,String property){
 		
 		if(property == null){
-			property = AppDataServiceImpl.COMMODITY_DEFAULT_PROPERTY;
+			property = AppDataServiceImpl.COMMODITY_ORDER_PROPERTY;
 		}
-		return plateService.getPopularCommodity(list, property, SysSetting.getIndexCommodityCount());
+		return plateService.getPopularCommodity(list, property, SysSetting.getCommodityCount(Page.INDEX));
 	}
 }
