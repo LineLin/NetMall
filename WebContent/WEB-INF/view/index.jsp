@@ -403,15 +403,15 @@
 						<c:forEach items="${pLists}" var="p">
 						<div class="category-item">
 							<h3>
-								<a href="itemlist/${p.linkPrefix}/${p.plate.id}">${p.plate.name}</a>
+								<a href="itemlist/${p.linkPath}/${p.plate.id}">${p.plate.name}</a>
 							</h3>
 							<div>
 								<ul class="l-subitem">
 								<c:forEach items="${p.subPlates}" var="sp" begin="0" end="${p.listSize/2-1+0.5}">
 									<li>
-										<h4><a href="itemlist/${sp.linkPrefix}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<h4><a href="itemlist/${sp.linkPath}/${p.plate.id}">${sp.plate.name}</a></h4>
 										<c:forEach items="${sp.subPlates}" var="tp">
-										<a href="itemlist/${tp.linkPrefix}/${tp.plate.id}">${tp.plate.name}</a>
+										<a href="itemlist/${tp.linkPath}/${tp.plate.id}">${tp.plate.name}</a>
 										</c:forEach>
 									</li>
 								</c:forEach>
@@ -419,9 +419,9 @@
 								<ul class="r-subitem">
 								<c:forEach items="${p.subPlates}" var="sp" begin="${p.listSize/2+0.5}">
 									<li>
-										<h4><a href="${sp.linkPrefix}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<h4><a href="${sp.linkPath}/${p.plate.id}">${sp.plate.name}</a></h4>
 										<c:forEach items="${sp.subPlates}" var="tp">
-										<a href="${tp.linkPrefix}/${tp.plate.id}">${tp.plate.name}</a>
+										<a href="${tp.linkPath}/${tp.plate.id}">${tp.plate.name}</a>
 										</c:forEach>
 									</li>
 								</c:forEach>
@@ -478,10 +478,10 @@
 						<ul>
 							<c:forEach items="${p.subPlates}" var="sp" begin="0" end="4" varStatus="status">
 								<c:if test="${status.count == 1}">
-								<li class="cm-title${status.count} cur"><a href="itemlist/${sp.linkPrefix}">${sp.plate.name}</a></li>
+								<li class="cm-title${status.count} cur"><a href="itemlist/${sp.linkPath}">${sp.plate.name}</a></li>
 								</c:if>
 								<c:if test="${status.count != 1}">
-								<li class="cm-title${status.count}"><a href="itemlist/${sp.linkPrefix}">${sp.plate.name}</a></li>
+								<li class="cm-title${status.count}"><a href="itemlist/${sp.linkPath}">${sp.plate.name}</a></li>
 								</c:if>
 							</c:forEach>
 						</ul>

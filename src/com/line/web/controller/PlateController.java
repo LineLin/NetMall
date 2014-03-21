@@ -23,7 +23,7 @@ public class PlateController {
 	@RequestMapping("/itemlist/second/{id}")
 	public String showSecondPlate(@PathVariable("id") String plateId,ModelMap model){
 		Plate p = plateService.getPlate(plateId);
-		List<PlateInfo> pInfo = plateService.getSubPlateInfo(p, p.getLevel()+1,Page.ITEMLIST);
+//		List<PlateInfo> pInfo = plateService.getSubPlateInfo(p, p.getLevel()+1,Page.ITEMLIST);
 //		pInfo = plateService.getPopularCommodity(pInfo, property, count);
 		return null;
 	}

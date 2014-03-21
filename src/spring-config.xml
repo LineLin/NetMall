@@ -16,7 +16,7 @@
 		AutowiredAnnotationBeanPostProcessor ：用于@Autowired标签为field注入依赖。
 		CommonAnnotationBeanPostProcessor 
 	-->
-    <context:component-scan base-package="com.line.web.*"/>
+    <context:component-scan base-package="com.line.web"/>
 	
 	
 	<!-- 配置注解式的Handler-

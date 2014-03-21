@@ -2,6 +2,7 @@ package com.line.web.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,11 +39,13 @@ public class CommodityDaoImpl implements CommodityDao {
 	@Override
 	public List<Commodity> getByPlate(String plateId,int count) {
 		String hql = "select c from Commodity c where c.enjoinPlate =?1";
-	
-		return sf.getCurrentSession().createQuery(hql)
-				.setParameter("1",plateId)
-				.setFetchSize(count)
-				.list();
+	    Query query = sf.getCurrentSession().createQuery(hql)
+	    				.setParameter("1",plateId);
+	    if(count != -1){
+	    	query = query.setFirstResult(0).setMaxResults(count);
+			
+	    }
+		return query.list();
 	}
 	
 	/**
@@ -62,7 +65,8 @@ public class CommodityDaoImpl implements CommodityDao {
 		return sf.getCurrentSession().createQuery(hql)
 				.setParameter("1",plateId)
 				.setParameter("2","c."+property)
-				.setFetchSize(count)
+				.setFirstResult(0)
+				.setMaxResults(count)
 				.list();
 	}
 
@@ -84,7 +88,8 @@ public class CommodityDaoImpl implements CommodityDao {
 			hql += "desc"; 
 		}
 		return sf.getCurrentSession().createQuery(hql)
-				.setFetchSize(count)
+				.setFirstResult(0)
+				.setMaxResults(count)
 				.list();
 	}
 

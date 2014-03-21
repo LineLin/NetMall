@@ -117,8 +117,7 @@ public class PlateServiceImpl implements PlateService {
 	 * @return
 	 */
 	private int getPlateShowCount(Page page,int level){
-		int count;
-		return count;
+		return SysSetting.getPagePlateCount(page, String.valueOf(level));
 	}
 	
 	/**
