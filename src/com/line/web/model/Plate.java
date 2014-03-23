@@ -16,6 +16,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="plate")
 public class Plate {	
+	
+	private String id;
+	
+	//板块名
+	private String name;
+	//板块类型
+	private int level;
+	//板块显示级别
+	private int showSeq;
+	//从属版块
+	private List<Plate> childPlate;
+	//所属板块
+	private Plate parentPlate;
+	
 
 	public Plate() {
 	}
@@ -29,18 +43,6 @@ public class Plate {
 		this.name = name;
 		this.level = level;
 	}
-
-	private String id;
-	
-	private String name;
-	
-	private int level;
-	
-	private int showSeq;
-	
-	private List<Plate> childPlate;
-
-	private Plate parentPlate;
 	
 	@ManyToOne
 	@JoinColumn(name="pid")

@@ -2,7 +2,6 @@ package com.line.web.model.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,43 +26,41 @@ public class CommodityDaoImpl implements CommodityDao {
 	}
 	
 	/**
-	 * @param plateId 所属板块的id
+	 * @param plate 所属板块的id
 	 * @return 板块下所有的商品
 	 */
 	@Override
-	public List<Commodity> getByPlate(String plateId) {
+	public List<Commodity> getByPlate(Plate plate) {
 		
-		return getByPlate(plateId,Integer.MAX_VALUE);
+		return getByPlate(plate,Integer.MAX_VALUE);
 	}
 	
 	@Override
-	public List<Commodity> getByPlate(String plateId,int count) {
-		String hql = "select c from Commodity c where c.enjoinPlate =?1";
-	    Query query = sf.getCurrentSession().createQuery(hql)
-	    				.setParameter("1",plateId);
-	    if(count != -1){
-	    	query = query.setFirstResult(0).setMaxResults(count);
-			
-	    }
-		return query.list();
+	public List<Commodity> getByPlate(Plate plate,int count) {
+		String hql = "select c from Commodity c where c.enjoinPlate =:plate";
+		return sf.getCurrentSession().createQuery(hql)
+				.setParameter("plate",plate)
+				.setFirstResult(0)
+				.setMaxResults(count)
+				.list();
 	}
 	
 	/**
 	 * 功能：取得某个板块下按某个关键字排列的count个商品
-	 * @param plateId 所属板块id
+	 * @param plate 所属板块id
 	 * @param count 取得的商品数
 	 * @param property 排序关键字，注意，property必须是Commodity里的属性名。
 	 * @param isDisc 是否降序排列
 	 */
 	@Override
-	public List<Commodity> getListWithOrder(String plateId,int count,String property,boolean isDesc){
+	public List<Commodity> getListWithOrder(Plate plate,int count,String property,boolean isDesc){
 		String hql = "select c from Commodity c where c.enjoinPlate =?1 order by ?2";
 		if(isDesc){
 			hql += " desc";
 		}
 		
 		return sf.getCurrentSession().createQuery(hql)
-				.setParameter("1",plateId)
+				.setParameter("1",plate)
 				.setParameter("2","c."+property)
 				.setFirstResult(0)
 				.setMaxResults(count)
@@ -71,9 +68,9 @@ public class CommodityDaoImpl implements CommodityDao {
 	}
 
 	@Override
-	public List<Commodity> getListWithOrder(String plateId, int count,
+	public List<Commodity> getListWithOrder(Plate plate, int count,
 			String property) {
-		return getListWithOrder(plateId,count,property,false);
+		return getListWithOrder(plate,count,property,false);
 	}
 
 	@Override

@@ -43,6 +43,7 @@ public class CommodityTest extends TestCase {
 			Session session = HibernateUtil.getSession();
 			String hql = "select p from Plate p where p.level=3";
 			session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Plate> lists = (List<Plate>) session.createQuery(hql).list();
 			for(Plate p : lists){
 				int i = 5;
@@ -53,7 +54,7 @@ public class CommodityTest extends TestCase {
 					comm.setPrice(299.9);
 					comm.setEnjoinPlate(p);
 					int r =(int) (Math.random() * 3) + 1;
-					comm.setImage("public/img/" + images[r]);
+					comm.setImage(images[r]);
 					session.save(comm);
 				}
 			}

@@ -255,10 +255,6 @@
 				overflow: hidden;
 				white-space: nowrap;
 			}
-			.comm-show
-			{
-
-			}
 			.cm-b
 			{
 				height: 580px;
@@ -273,11 +269,16 @@
 				font-family: 微软雅黑 "serif";
 				border-bottom: 2px solid #60a42c;
 			}
+			.cm-nav a
+			{
+				color: #666;
+				font-family: 微软雅黑 "serif"; 
+			}
 			.cm-nav h2
 			{
 				text-align: center;
 				width: 228px;
-				height: 49px;
+				height: 45px;
 				line-height: 30px;
 				font-size: 22px;
 				display: inline-block;
@@ -381,7 +382,7 @@
 			}
 		</style>
 
-		<script src="public/js/jquery-1.11.0.js">
+		<script src="resource/js/jquery-1.11.0.js">
 		</script>
 	</head>
 	<body>
@@ -403,15 +404,15 @@
 						<c:forEach items="${pLists}" var="p">
 						<div class="category-item">
 							<h3>
-								<a href="itemlist/${p.linkPath}/${p.plate.id}">${p.plate.name}</a>
+								<a href="plate/itemlist/${p.linkPath}/${p.plate.id}">${p.plate.name}</a>
 							</h3>
 							<div>
 								<ul class="l-subitem">
 								<c:forEach items="${p.subPlates}" var="sp" begin="0" end="${p.listSize/2-1+0.5}">
 									<li>
-										<h4><a href="itemlist/${sp.linkPath}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<h4><a href="plate/itemlist/${sp.linkPath}/${sp.plate.id}">${sp.plate.name}</a></h4>
 										<c:forEach items="${sp.subPlates}" var="tp">
-										<a href="itemlist/${tp.linkPath}/${tp.plate.id}">${tp.plate.name}</a>
+										<a href="plate/itemlist/${tp.linkPath}/${tp.plate.id}">${tp.plate.name}</a>
 										</c:forEach>
 									</li>
 								</c:forEach>
@@ -419,7 +420,7 @@
 								<ul class="r-subitem">
 								<c:forEach items="${p.subPlates}" var="sp" begin="${p.listSize/2+0.5}">
 									<li>
-										<h4><a href="${sp.linkPath}/${p.plate.id}">${sp.plate.name}</a></h4>
+										<h4><a href="${sp.linkPath}/${sp.plate.id}">${sp.plate.name}</a></h4>
 										<c:forEach items="${sp.subPlates}" var="tp">
 										<a href="${tp.linkPath}/${tp.plate.id}">${tp.plate.name}</a>
 										</c:forEach>
@@ -442,10 +443,10 @@
 				</div>
 				<div id="slider">
 					<ul id="slider-list">
-						<li><a href="#"><img src="public/img/ad.jpg"/></a></li>
-						<li><a href="#"><img src="public/img/003.png"/></a></li>
-						<li><a href="#"><img src="public/img/ad.jpg"/></a></li>
-						<li><a href="#"><img src="public/img/003.png"/></a></li>
+						<li><a href="#"><img src="resource/img/ad.jpg"/></a></li>
+						<li><a href="#"><img src="resource/img/003.png"/></a></li>
+						<li><a href="#"><img src="resource/img/ad.jpg"/></a></li>
+						<li><a href="#"><img src="resource/img/003.png"/></a></li>
 					</ul>
 					<div class="sibd">
 						<span class="btn-imgSel cur">1</span>
@@ -478,10 +479,10 @@
 						<ul>
 							<c:forEach items="${p.subPlates}" var="sp" begin="0" end="4" varStatus="status">
 								<c:if test="${status.count == 1}">
-								<li class="cm-title${status.count} cur"><a href="itemlist/${sp.linkPath}">${sp.plate.name}</a></li>
+								<li class="cm-title${status.count} cur"><a href="plate/itemlist/${sp.linkPath}/${sp.plate.id}">${sp.plate.name}</a></li>
 								</c:if>
 								<c:if test="${status.count != 1}">
-								<li class="cm-title${status.count}"><a href="itemlist/${sp.linkPath}">${sp.plate.name}</a></li>
+								<li class="cm-title${status.count}"><a href="plate/itemlist/${sp.linkPath}/${sp.plate.id}">${sp.plate.name}</a></li>
 								</c:if>
 							</c:forEach>
 						</ul>
@@ -491,7 +492,7 @@
 							<ul class="foot${status.count} ${status.count == 1 ? 'cur':''}">
 								<c:forEach items="${sp.commodities}" var ="commodity">
 									<li>
-										<a href="#"><img src="${commodity.image}"/></a>
+										<a href="#"><img src="resource/img/${commodity.image}"/></a>
 										<a href="#"><span>${commodity.description}</span></a>
 										<span style="color:#E4393C">￥${commodity.price}</span>
 									</li>

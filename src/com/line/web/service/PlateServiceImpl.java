@@ -72,7 +72,10 @@ public class PlateServiceImpl implements PlateService {
 		if(plate.getLevel() >= depth){
 			return null;
 		}
+//		System.out.println("***************************************1***********");
 		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(page,plate.getLevel()+1));
+		
+		
 		List<PlateInfo> pInfo = new ArrayList<PlateInfo>();
 		
 		if(!subPlates.isEmpty()){
@@ -127,7 +130,7 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	private void getLeafPlate(Plate p,List<Plate> list){
 		
-		List<Plate> childs = plateDao.getByPid(p.getId());
+		List<Plate> childs = plateDao.getByPid(p);
 		if(childs.isEmpty()){
 			list.add(p);
 			return;
@@ -145,11 +148,17 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count){
 		for(PlateInfo p : list){
-			for(PlateInfo sp : p.getSubPlates()){
-				List<Plate> leafPlates = new ArrayList<Plate>();
-				getLeafPlate(sp.getPlate(),leafPlates);
-				List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
-				sp.setCommodities(commodities);
+			if(p.getSubPlates() == null){
+				List<Commodity> commodities = commodityDao.getByPlate(p.getPlate(), count);
+				p.setCommodities(commodities);
+			}else{
+				for(PlateInfo sp : p.getSubPlates()){
+					List<Plate> leafPlates = new ArrayList<Plate>();
+//					System.out.println("***************************************2***********");
+					getLeafPlate(sp.getPlate(),leafPlates);
+					List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
+					sp.setCommodities(commodities);
+				}
 			}
 		}
 		return list;

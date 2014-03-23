@@ -50,7 +50,7 @@ final public class SysSetting {
 				doc = DocumentHelper.createDocument();
 			    doc.setXMLEncoding("uft8");
 				Element root = doc.addElement("config");
-				initIndexPageSetting(root);
+				initPageSetting(root);
 				initCommodityShowCount(root);
 	            format.setNewlines(true);
 				writer = new XMLWriter(new FileWriter(file),format);
@@ -70,7 +70,7 @@ final public class SysSetting {
 					String count = e.element("count").getText();
 					Integer value;
 					if(count.equals("*")){
-						value = -1;
+						value = Integer.MAX_VALUE;
 					}else{
 						value = Integer.valueOf(count);
 					}
@@ -85,7 +85,7 @@ final public class SysSetting {
 					String count = e.element("count").getText();
 					Integer value;
 					if(count.equals("*")){
-						value = -1;
+						value = Integer.MAX_VALUE;
 					}else{
 						value = Integer.valueOf(count);
 					}
@@ -121,23 +121,43 @@ final public class SysSetting {
 	 * 功能：初始化首页的页面设置
 	 * @param root
 	 */
-	private static void initIndexPageSetting(Element root){
+	private static void initPageSetting(Element root){
 		Element count;
 		Element page = root.addElement("page");
+		//-----------------------------_初始化首页设置--------------------------------
 		Element index = page.addElement("index");
 		Element plates = index.addElement("plates");
-		Element top = plates.addElement("plate");
-		top.addAttribute("level","1");
-		count = top.addElement("count");
+		Element itop = plates.addElement("plate");
+		itop.addAttribute("level","1");
+		count = itop.addElement("count");
 		count.setText("*");
-		Element second = plates.addElement("plate");
-		second.addAttribute("level", "2");
-		count = second.addElement("count");
+		Element isecond = plates.addElement("plate");
+		isecond.addAttribute("level", "2");
+		count = isecond.addElement("count");
 		count.setText("8");
-		Element third = plates.addElement("plate");
-		third.addAttribute("level","3");
-		count = third.addElement("count");
+		Element ithird = plates.addElement("plate");
+		ithird.addAttribute("level","3");
+		count = ithird.addElement("count");
 		count.setText("10");
+		//-----------------------------_初始化一级板块设置--------------------------------
+		Element first = page.addElement("first");
+		Element fPlates = first.addElement("plates");
+		Element fSecond = fPlates.addElement("plate");
+		fSecond.addAttribute("level","2");
+		count = fSecond.addElement("count");
+		count.setText("*");
+		Element fThird = fPlates.addElement("plate");
+		fThird.addAttribute("level","3");
+		count = fThird.addElement("count");
+		count.setText("15");
+		
+		//-----------------------------_初始化二级板块设置--------------------------------
+		Element second = page.addElement("second");
+		Element sPlates = second.addElement("plates");
+		Element sThird = sPlates.addElement("plate");
+		sThird.addAttribute("level","3");
+		count = sThird.addElement("count");
+		count.setText("*");
 	}
 	
 	/**
@@ -181,10 +201,10 @@ final public class SysSetting {
 		}
 	}
 	/**
-	 * 功能：根据页面和板块的级别，返回显示的个数。如果要显示全部，则返回-1
+	 * 功能：根据页面和板块的级别，返回显示的个数。如果要显示全部，则返回Integer.MAX_VALUE
 	 * @param page 页面
 	 * @param level 板块级数
-	 * @return -1 当要显示全部某级别的全部板块时。 count 要显示的板块数。
+	 * @return Integer.MAX_VALUE 当要显示全部某级别的全部板块时。 count 要显示的板块数。
 	 */
 	public static int getPagePlateCount(Page page,String level){
 		String key = getPageKey(page,level);
@@ -195,10 +215,11 @@ final public class SysSetting {
 			File file = new File(FILE_PATH);
 			try {
 				Document doc = reader.read(file);
-				Element e = (Element)doc.selectSingleNode((key));
+				Element e = (Element)doc.selectSingleNode(key);
+				System.out.println(key);
 				String countText = e.element("count").getText();
 				if(countText.equals("*")){
-					return -1;
+					return Integer.MAX_VALUE;
 				}
 				count = Integer.valueOf(countText);
 				siteMap.put(key, count);
@@ -210,7 +231,7 @@ final public class SysSetting {
 	}
 	
 	/**
-	 * 功能：根据不同的页面返回要在页面上显示的商品数量。如果要显示全部，那么返回-1 。否则返回其商品数
+	 * 功能：根据不同的页面返回要在页面上显示的商品数量。如果要显示全部，那么返回Integer.MAX_VALUE 。否则返回其商品数
 	 * @param page 页面
 	 * @return
 	 */
@@ -226,7 +247,7 @@ final public class SysSetting {
 				Element e = (Element) doc.selectSingleNode(key);
 			    String countText = e.element("count").getText();
 			    if(countText.equals("*")){
-			    	return -1;
+			    	return Integer.MAX_VALUE;
 			    }
 			    count = Integer.valueOf(countText);
 			    siteMap.put(key, count);

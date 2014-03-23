@@ -2,7 +2,6 @@ package com.line.web.model.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +33,10 @@ public class PlateDaoImpl implements PlateDao {
 					+"' order by p.showSeq";
 		}
 		
-		Query query = sf.getCurrentSession().createQuery(hql);
-		
-		if(count != -1){
-			query.setFirstResult(0).setMaxResults(count);
-		}
-		List<Plate> plates = query.list();
-		
-		return plates;
+		return sf.getCurrentSession().createQuery(hql)
+				 .setFirstResult(0)
+				 .setMaxResults(count)
+				 .list();
 	}
 	
 	@Override
@@ -64,22 +59,21 @@ public class PlateDaoImpl implements PlateDao {
 	@Override
 	public Plate getById(String id) {
 		
-		return (Plate) sf.getCurrentSession().createQuery("select p from Plate p where p.id = ?1")
-				.setParameter("1",id)
-				.uniqueResult();
+		return (Plate) sf.getCurrentSession().get(Plate.class,id);
 	}
 
 	@Override
-	public List<Plate> getByPid(String pid) {
-		return sf.getCurrentSession().createQuery("select p from Plate p where p.parentPlate = '" + pid + "'")
-//				.setParameter("pid",pid)
+	public List<Plate> getByPid(Plate parent) {
+		return sf.getCurrentSession()
+				.createQuery("select p from Plate p where p.parentPlate =:parent")
+				.setParameter("parent",parent)
 				.list();
 	}
 
 	@Override
 	public List<Plate> getByLevel(int level) {
-		return sf.getCurrentSession().createQuery("select p from Plate p where p.level =?1")
-				.setParameter("1",level)
+		return sf.getCurrentSession().createQuery("select p from Plate p where p.level =:level")
+				.setParameter("level",level)
 				.list();
 	}
 	

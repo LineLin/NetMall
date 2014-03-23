@@ -18,6 +18,6 @@ public interface PlateDao {
 	
 	public Plate getById(String id);
 	
-	public List<Plate> getByPid(String pid);
+	public List<Plate> getByPid(Plate parent);
 	
 }
