@@ -16,6 +16,6 @@ public interface PlateService {
 	
 	public Plate getPlate(String id);
 	
-	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count);
+	public void getPopularCommodity(List<PlateInfo> list,String property,int count);
 		
 }

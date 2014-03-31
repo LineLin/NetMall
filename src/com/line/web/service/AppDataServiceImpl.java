@@ -30,6 +30,9 @@ public class AppDataServiceImpl implements AppDataService {
 		if(property == null){
 			property = AppDataServiceImpl.COMMODITY_ORDER_PROPERTY;
 		}
-		return plateService.getPopularCommodity(list, property, SysSetting.getPageCommodityCount(Page.INDEX));
+		for(PlateInfo p : list){
+			plateService.getPopularCommodity(p.getSubPlates(), property, SysSetting.getPageCommodityCount(Page.INDEX));
+		}
+		return list;
 	}
 }

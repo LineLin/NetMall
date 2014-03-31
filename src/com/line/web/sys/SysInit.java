@@ -4,18 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.line.web.model.Plate;
 import com.line.web.model.dao.PlateDao;
 
 @Transactional
+@Service
 public class SysInit {
 	
-	@Autowired
-	private static PlateDao plateDao;
+	private static SysInit instance = new SysInit();
 	
-	public static List<Plate> initIndexPlates(){
+	private PlateDao plateDao;
+	
+	SysInit(){
+		
+	}
+	
+	public static SysInit getInstance(PlateDao plateDao){
+		instance.plateDao = plateDao;
+		return instance;
+	}
+	public List<Plate> initIndexPlates(){
 		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
 		List<Plate> list = new ArrayList<Plate>();
 		for(int i=0; i<pNames.length; i++){
@@ -28,7 +39,7 @@ public class SysInit {
 		return list;
 	}
 	
-	public static void addSecondPlate(List<Plate> fPlates){
+	public  void addSecondPlate(List<Plate> fPlates){
 		String[][] names = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
 				{"翡翠","黄金","白银","砖石","水晶"},
 				{"女装","儿装","男装","大肚装"},
@@ -48,7 +59,7 @@ public class SysInit {
 		}
 	}
 	
-	public static void addDefaultThirdPlate(){
+	public  void addDefaultThirdPlate(){
 		List<Plate> list = plateDao.getByLevel(2);
 		for(Plate p : list){
 			int j = 20;
@@ -60,7 +71,7 @@ public class SysInit {
 		}
 	}
 	
-	public static void main(){
-		
+	public  void main(String args[]){
+		addDefaultThirdPlate();
 	}
 }

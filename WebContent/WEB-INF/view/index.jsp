@@ -389,9 +389,11 @@
 		<div class="page">
 			<div class="head-0">
 				<ul>
-					<li><a id="user" href="#"></a></li>
+					<li><a id="user" href="#">${userName}</a></li>
+					<c:if test="${userName == null }">
 					<li><a id="login" href="#">登陆</a></li>
 					<li><a id="regist" href="#">注册</a></li>
+					</c:if>
 				</ul>
 			</div>
 			<div class="head-ad"></div>

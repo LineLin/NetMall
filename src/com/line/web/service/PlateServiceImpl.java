@@ -11,6 +11,7 @@ import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 import com.line.web.model.dao.CommodityDao;
 import com.line.web.model.dao.PlateDao;
+import com.line.web.sys.SysInit;
 import com.line.web.sys.SysSetting;
 import com.line.web.utils.Page;
 import com.line.web.view.support.PlateInfo;
@@ -72,7 +73,7 @@ public class PlateServiceImpl implements PlateService {
 		if(plate.getLevel() >= depth){
 			return null;
 		}
-//		System.out.println("***************************************1***********");
+		
 		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(page,plate.getLevel()+1));
 		
 		
@@ -128,40 +129,40 @@ public class PlateServiceImpl implements PlateService {
 	 * @param p 父板块
 	 * @param list 叶子板块存储列表
 	 */
-	private void getLeafPlate(Plate p,List<Plate> list){
-		
-		List<Plate> childs = plateDao.getByPid(p);
-		if(childs.isEmpty()){
-			list.add(p);
-			return;
-		}else{
-			for(Plate cp : childs){
-				getLeafPlate(cp,list);
-			}
-		}
-	}
+//	private void getLeafPlate(Plate p,List<Plate> list){
+//		
+//		List<Plate> childs = plateDao.getByPid(p);
+//		if(childs.isEmpty()){
+//			list.add(p);
+//			return;
+//		}else{
+//			for(Plate cp : childs){
+//				getLeafPlate(cp,list);
+//			}
+//		}
+//	}
+	
 	/**
 	 * 功能：取得list中每个板块下要展示的商品
 	 * @param list 板块展示列表
 	 * @param property 排序的属性
 	 * @param count 取得的商品数量
 	 */
-	public List<PlateInfo> getPopularCommodity(List<PlateInfo> list,String property,int count){
+	@Override
+	public void getPopularCommodity(List<PlateInfo> list,String property,int count){
 		for(PlateInfo p : list){
 			if(p.getSubPlates() == null){
 				List<Commodity> commodities = commodityDao.getByPlate(p.getPlate(), count);
 				p.setCommodities(commodities);
 			}else{
-				for(PlateInfo sp : p.getSubPlates()){
-					List<Plate> leafPlates = new ArrayList<Plate>();
-//					System.out.println("***************************************2***********");
-					getLeafPlate(sp.getPlate(),leafPlates);
-					List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
-					sp.setCommodities(commodities);
-				}
+				List<Plate> leafPlates;
+//				getLeafPlate(p.getPlate(),leafPlates);
+				leafPlates = plateDao.getLeafPlate(p.getPlate());
+				System.out.println(leafPlates.size());
+				List<Commodity> commodities = commodityDao.getByPlates(leafPlates,property,count);
+				p.setCommodities(commodities);
 			}
 		}
-		return list;
 	}
 	
 	/**
@@ -170,31 +171,32 @@ public class PlateServiceImpl implements PlateService {
 	 */
 	@Override
 	public List<Plate> initPlate(){
-		List<Plate> plates = new ArrayList<>();
-		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
-		String[][] secondName = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
-								{"翡翠","黄金","白银","砖石","水晶"},
-								{"女装","儿装","男装","大肚装"},
-								{"人文社科","人物传记","教育","文艺","辅导书","儿童书"},
-								{"爽肤水","粉底","睫毛膏","祛痘","面膜","口红"},
-								{"平板","台式电脑","电脑配件","电脑外设"},
-								{"充值","购物"},
-								{"彩票","教育培训","餐饮美食","休闲娱乐","电影演出"}};
-		for(int i=0; i<pNames.length; i++){
-			Plate plate = new Plate();
-			plate.setName(pNames[i]);
-			plate.setLevel(1);
-			plateDao.save(plate);
-			for(int j=0; j<secondName[i].length;j++){
-				Plate p = new Plate();
-				p.setName(secondName[i][j]);
-				p.setParentPlate(plate);
-				p.setLevel(2);
-				plateDao.save(p);
-			}
-			plates.add(plate);
-		}
-		return plates;
+		return SysInit.getInstance(plateDao).initIndexPlates();
+//		List<Plate> plates = new ArrayList<>();
+//		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
+//		String[][] secondName = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
+//								{"翡翠","黄金","白银","砖石","水晶"},
+//								{"女装","儿装","男装","大肚装"},
+//								{"人文社科","人物传记","教育","文艺","辅导书","儿童书"},
+//								{"爽肤水","粉底","睫毛膏","祛痘","面膜","口红"},
+//								{"平板","台式电脑","电脑配件","电脑外设"},
+//								{"充值","购物"},
+//								{"彩票","教育培训","餐饮美食","休闲娱乐","电影演出"}};
+//		for(int i=0; i<pNames.length; i++){
+//			Plate plate = new Plate();
+//			plate.setName(pNames[i]);
+//			plate.setLevel(1);
+//			plateDao.save(plate);
+//			for(int j=0; j<secondName[i].length;j++){
+//				Plate p = new Plate();
+//				p.setName(secondName[i][j]);
+//				p.setParentPlate(plate);
+//				p.setLevel(2);
+//				plateDao.save(p);
+//			}
+//			plates.add(plate);
+//		}
+//		return plates;
 	}
 
 	

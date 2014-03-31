@@ -20,4 +20,6 @@ public interface PlateDao {
 	
 	public List<Plate> getByPid(Plate parent);
 	
+	public List<Plate> getLeafPlate(Plate plate);
+	
 }

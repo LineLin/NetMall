@@ -76,5 +76,13 @@ public class PlateDaoImpl implements PlateDao {
 				.setParameter("level",level)
 				.list();
 	}
+
+	@Override
+	public List<Plate> getLeafPlate(Plate plate) {
+		
+		return sf.getCurrentSession().createQuery("select p from Plate p where p.path like :pid")
+				.setParameter("pid", "%" + plate.getId() + "%")
+				.list();
+	}
 	
 }

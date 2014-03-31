@@ -18,13 +18,15 @@ import org.hibernate.annotations.GenericGenerator;
 public class Plate {	
 	
 	private String id;
-	
 	//板块名
 	private String name;
 	//板块类型
 	private int level;
 	//板块显示级别
 	private int showSeq;
+	
+	private String path;
+	
 	//从属版块
 	private List<Plate> childPlate;
 	//所属板块
@@ -52,6 +54,15 @@ public class Plate {
 	
 	public void setParentPlate(Plate parentPlate) {
 		this.parentPlate = parentPlate;
+		
+		if(parentPlate == null) return ;
+		
+		if(parentPlate.path != null){
+			setPath(parentPlate.path + "-" + parentPlate.id);
+		}else{
+			setPath("-" + parentPlate.id);
+		}
+		
 	}
 	
 	@Id
@@ -97,5 +108,13 @@ public class Plate {
 
 	public void setShowSeq(int showSeq) {
 		this.showSeq = showSeq;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	public String getPath(){
+		return this.path;
 	}
 }

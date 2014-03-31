@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.line.web.model.User;
 import com.line.web.service.AppDataService;
+import com.line.web.sys.SysInit;
 import com.line.web.view.support.PlateInfo;
 
 @Controller
-@SessionAttributes("user")
 public class ApplicationController {
 	
 	@Autowired
@@ -28,8 +28,6 @@ public class ApplicationController {
 		if(user != null){
 			model.addAttribute("userId", user.getId());
 			model.addAttribute("userName",user.getName());
-		}else{
-			model.addAttribute("userName","游客");
 		}
 		
 		List<PlateInfo> pList;
