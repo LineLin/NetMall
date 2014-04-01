@@ -372,14 +372,14 @@
 				<div class="category">
 				<c:forEach items="${ plates }" var="p" varStatus="status">
 					<c:if test="${status.count == 1 }">
-						<h2 class="first"><a href="plate/itemlist/${ p.linkPath }/${ p.plate.id }">${ p.plate.name }</a></h2>
+						<h2 class="first"><a href="../${ p.linkPath }/${ p.plate.id }">${ p.plate.name }</a></h2>
 					</c:if>
 					<c:if test="${status.count != 1 }">
-						<h2><a href="plate/itemlist/${ p.linkPath }/${ p.plate.id }">${ p.plate.name }</a></h2>
+						<h2><a href="../${ p.linkPath }/${ p.plate.id }">${ p.plate.name }</a></h2>
 					</c:if>
 					<div class="category-sub-content">
 					<c:forEach items="${ p.subPlates }" var="sp">
-						<a href="plate/itemlist/${ sp.linkPath }/${ sp.plate.id}">${ sp.plate.name }</a>
+						<a href="../${ sp.linkPath }?id=${ sp.plate.id}&page=1">${ sp.plate.name }</a>
 					</c:forEach>
 					</div>
 				</c:forEach>

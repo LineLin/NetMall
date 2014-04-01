@@ -30,7 +30,7 @@ public class PlateServiceImpl implements PlateService {
 	private final String SECOND_PLATE_SHOW_LINK_PATH = "second";
 	
 	//三级板块显示页面的链接地址
-	private final String THIRD_PLATE_SHOW_LINK_PATH = "third";
+	private final String THIRD_PLATE_SHOW_LINK_PATH = "items";
 	
 	private final String DEFAULT_PLATE_SHOW_LINK_PATH = "";
 	
@@ -172,31 +172,40 @@ public class PlateServiceImpl implements PlateService {
 	@Override
 	public List<Plate> initPlate(){
 		return SysInit.getInstance(plateDao).initIndexPlates();
-//		List<Plate> plates = new ArrayList<>();
-//		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
-//		String[][] secondName = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
-//								{"翡翠","黄金","白银","砖石","水晶"},
-//								{"女装","儿装","男装","大肚装"},
-//								{"人文社科","人物传记","教育","文艺","辅导书","儿童书"},
-//								{"爽肤水","粉底","睫毛膏","祛痘","面膜","口红"},
-//								{"平板","台式电脑","电脑配件","电脑外设"},
-//								{"充值","购物"},
-//								{"彩票","教育培训","餐饮美食","休闲娱乐","电影演出"}};
-//		for(int i=0; i<pNames.length; i++){
-//			Plate plate = new Plate();
-//			plate.setName(pNames[i]);
-//			plate.setLevel(1);
-//			plateDao.save(plate);
-//			for(int j=0; j<secondName[i].length;j++){
-//				Plate p = new Plate();
-//				p.setName(secondName[i][j]);
-//				p.setParentPlate(plate);
-//				p.setLevel(2);
-//				plateDao.save(p);
-//			}
-//			plates.add(plate);
-//		}
-//		return plates;
+		/*List<Plate> plates = new ArrayList<>();
+		String[] pNames = {"家具","珠宝","服装","图书","化妆品","电脑办公","虚拟币","生活服务"};
+		String[][] secondName = {{"客厅家具","餐厅家具","卧室家具","床","书房家具"},
+								{"翡翠","黄金","白银","砖石","水晶"},
+								{"女装","儿装","男装","大肚装"},
+								{"人文社科","人物传记","教育","文艺","辅导书","儿童书"},
+								{"爽肤水","粉底","睫毛膏","祛痘","面膜","口红"},
+								{"平板","台式电脑","电脑配件","电脑外设"},
+								{"充值","购物"},
+								{"彩票","教育培训","餐饮美食","休闲娱乐","电影演出"}};
+		for(int i=0; i<pNames.length; i++){
+			Plate plate = new Plate();
+			plate.setName(pNames[i]);
+			plate.setLevel(1);
+			plateDao.save(plate);
+			for(int j=0; j<secondName[i].length;j++){
+				Plate p = new Plate();
+				p.setName(secondName[i][j]);
+				p.setParentPlate(plate);
+				p.setLevel(2);
+				plateDao.save(p);
+			}
+			plates.add(plate);
+		}
+		return plates;
+		*/
+	}
+
+	@Override
+	public List<Commodity> getPageCommodity(Plate plate, String sortBy, boolean isDesc,
+			int page, int pageSize) {
+		List<Commodity> list;
+		list = commodityDao.getByPlate(plate, page, pageSize, sortBy, isDesc);
+		return list;
 	}
 
 	

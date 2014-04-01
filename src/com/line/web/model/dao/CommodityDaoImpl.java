@@ -2,8 +2,6 @@ package com.line.web.model.dao;
 
 import java.util.List;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.line.web.model.Commodity;
@@ -11,10 +9,7 @@ import com.line.web.model.Plate;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CommodityDaoImpl implements CommodityDao {
-	
-	@Autowired
-	private SessionFactory sf;
+public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements CommodityDao {
 	
 	/**
 	 * 功能：通过id查找商品 
@@ -35,6 +30,11 @@ public class CommodityDaoImpl implements CommodityDao {
 		return getByPlate(plate,Integer.MAX_VALUE);
 	}
 	
+	/**
+	 * @param plate 父板块
+	 * @count 要取得的商品数
+	 * @return 目标商品列表
+	 */
 	@Override
 	public List<Commodity> getByPlate(Plate plate,int count) {
 		String hql = "select c from Commodity c where c.enjoinPlate =:plate";
@@ -54,25 +54,38 @@ public class CommodityDaoImpl implements CommodityDao {
 	 */
 	@Override
 	public List<Commodity> getListWithOrder(Plate plate,int count,String property,boolean isDesc){
-		String hql = "select c from Commodity c where c.enjoinPlate =?1 order by ?2";
+		String hql = "select c from Commodity c where c.enjoinPlate =:plate order by :property";
 		if(isDesc){
 			hql += " desc";
 		}
 		
 		return sf.getCurrentSession().createQuery(hql)
-				.setParameter("1",plate)
-				.setParameter("2","c."+property)
+				.setParameter("plate",plate)
+				.setParameter("property","c."+property)
 				.setFirstResult(0)
 				.setMaxResults(count)
 				.list();
 	}
 
+	/**
+	 * @param plate 父板块
+	 * @param count 数量
+	 * @param property 排序字段
+	 */
 	@Override
 	public List<Commodity> getListWithOrder(Plate plate, int count,
 			String property) {
 		return getListWithOrder(plate,count,property,false);
 	}
 
+	/**
+	 * 功能:取得某些板块下的商品列表
+	 * @param plates 父板块列表
+	 * @param count 要取得的商品数
+	 * @param property 排序字段
+	 * @param isDesc 是否倒序排序
+	 * @return 目标商品列表
+	 */
 	@Override
 	public List<Commodity> getByPlates(List<Plate> plates, String property,int count,
 			boolean isDesc) {
@@ -82,7 +95,7 @@ public class CommodityDaoImpl implements CommodityDao {
 		}
 		hql = hql.substring(0, hql.lastIndexOf(",")) + ") order by c."+property;
 		if(isDesc){
-			hql += "desc"; 
+			hql += " desc"; 
 		}
 		return sf.getCurrentSession().createQuery(hql)
 				.setFirstResult(0)
@@ -93,6 +106,29 @@ public class CommodityDaoImpl implements CommodityDao {
 	@Override
 	public List<Commodity> getByPlates(List<Plate> plates,String property,int count) {
 		return getByPlates(plates,property,count,false);
+	}
+	/**
+	 * @param plate 父板块
+	 * @param page 请求页面数
+	 * @param pageSize 每页显示的数量
+	 * @param sortBy 排序字段
+	 * @param sort 排序
+	 */
+	@Override
+	public List<Commodity> getByPlate(Plate plate, int page, int pageSize,
+			String sortBy, boolean isDesc) {
+		String hql = "from Commodity c where c.enjoinPlate = :plate";
+		if(sortBy != null){
+			hql += " order by c." + sortBy;
+		}
+		if(isDesc){
+			hql += " desc";
+		}
+		return sf.getCurrentSession().createQuery(hql)
+				.setParameter("plate",plate)
+				.setFirstResult((page-1) * pageSize)
+				.setMaxResults(pageSize)
+				.list();
 	}
 
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 import com.line.web.service.PlateService;
 import com.line.web.sys.SysSetting;
@@ -17,7 +19,8 @@ import com.line.web.view.support.PlateInfo;
 @Controller
 @RequestMapping(value="/plate")
 public class PlateController {
-	
+
+	private final int COMMODITY_SHOW_PAGE_SIZE = 1;
 	@Autowired
 	private PlateService plateService;
 	
@@ -51,15 +54,18 @@ public class PlateController {
 		return "/itemlist/second";
 	}
 	
-	@RequestMapping(value="/itemlist/third/{id}")
-	public String showThirdPlate(@PathVariable("id") String plateId,Model model){
+	@RequestMapping(value="/itemlist/items")
+	public String showThirdPlate(@RequestParam(value="id") String plateId,int page,
+			@RequestParam(value="sortBy",required=false) String sortBy,Model model){
 		Plate p = plateService.getPlate(plateId);
 		if(p == null){
 			return "redirect:/";
 		}
-		List<PlateInfo> pInfo = plateService.getSubPlateInfo(p, p.getLevel()+1,Page.THIRD);
-		plateService.getPopularCommodity(pInfo,"sales",SysSetting.getPageCommodityCount(Page.THIRD));
-		model.addAttribute("plates",pInfo);
+		if(sortBy == null){
+			sortBy = "sales";
+		}
+		List<Commodity> list = plateService.getPageCommodity(p, sortBy,false, page, COMMODITY_SHOW_PAGE_SIZE);
+		model.addAttribute("commodityList", list);
 		return "/itemlist/third";
 	}
 	

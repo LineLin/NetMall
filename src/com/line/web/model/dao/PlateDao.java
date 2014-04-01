@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.line.web.model.Plate;
 
-public interface PlateDao {
+public interface PlateDao extends BasicDao<Plate>{
 	
-	public void save(Plate plate);
+//	public void save(Plate plate);
 	
 	public List<Plate> getPlateOrderByShowSeq(String pid,int count);
 	
 	public List<Plate> getByLevel(int level);
 	
-	public void del(String plateId);
+//	public void del(String plateId);
 	
-	public void update(Plate plate);
+//	public void update(Plate plate);
 	
 	public Plate getById(String id);
 	
