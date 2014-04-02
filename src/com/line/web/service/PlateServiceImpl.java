@@ -76,7 +76,6 @@ public class PlateServiceImpl implements PlateService {
 		
 		List<Plate> subPlates = (List<Plate>) plateDao.getPlateOrderByShowSeq(plate.getId(),getPlateShowCount(page,plate.getLevel()+1));
 		
-		
 		List<PlateInfo> pInfo = new ArrayList<PlateInfo>();
 		
 		if(!subPlates.isEmpty()){
@@ -208,17 +207,4 @@ public class PlateServiceImpl implements PlateService {
 		return list;
 	}
 
-	
-	/*-----------------------------临时性修改---------------------------------------------*/
-//	private void addDefaultThirdPlate(){
-//		List<Plate> list = plateDao.getByLevel(2);
-//		for(Plate p : list){
-//			int j = 20;
-//			while(j-- != 0){
-//				Plate temp = new Plate("测试",3);
-//				temp.setParentPlate(p);
-//				plateDao.save(temp);
-//			}
-//		}
-//	}
 }
