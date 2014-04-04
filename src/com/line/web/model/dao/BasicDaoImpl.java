@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class BasicDaoImpl<T> implements BasicDao<T>{
 	
 	@Autowired
@@ -20,5 +21,9 @@ public class BasicDaoImpl<T> implements BasicDao<T>{
 	
 	public void delete(T obj){
 		sf.getCurrentSession().delete(obj);
+	}
+	
+	public T findById(String id,Class<T> clz){
+		return (T) sf.getCurrentSession().get(clz, id);
 	}
 }

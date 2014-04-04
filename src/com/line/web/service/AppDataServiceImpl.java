@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.line.web.sys.SysSetting;
-import com.line.web.utils.Page;
+import com.line.web.utils.enumtool.Page;
 import com.line.web.view.support.PlateInfo;
 
 @Service

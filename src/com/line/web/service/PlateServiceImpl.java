@@ -13,7 +13,7 @@ import com.line.web.model.dao.CommodityDao;
 import com.line.web.model.dao.PlateDao;
 import com.line.web.sys.SysInit;
 import com.line.web.sys.SysSetting;
-import com.line.web.utils.Page;
+import com.line.web.utils.enumtool.Page;
 import com.line.web.view.support.PlateInfo;
 
 @Service

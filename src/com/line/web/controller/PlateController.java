@@ -13,7 +13,7 @@ import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
 import com.line.web.service.PlateService;
 import com.line.web.sys.SysSetting;
-import com.line.web.utils.Page;
+import com.line.web.utils.enumtool.Page;
 import com.line.web.view.support.PlateInfo;
 
 @Controller

@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.line.web.model.Shop;
 import com.line.web.model.User;
 import com.line.web.service.UserService;
 
@@ -31,8 +33,8 @@ public class UserManagerController{
 	public ModelMap login(@RequestBody User a,ModelMap model){
 		String account = a.getAccount();
 		String password = a.getPassword();
-		System.out.println("account: " + account);
-		System.out.println("password: " + password);
+//		System.out.println("account: " + account);
+//		System.out.println("password: " + password);
 		if( !userService.checkFormat(account, password)){
 			model.addAttribute("errorMsg","账号和密码不能为空，且不带特殊字符");
 			return model;
@@ -57,21 +59,28 @@ public class UserManagerController{
 	}
 	
 	@RequestMapping("/save")
-	public String saveUser(User user,Model model){
+	public String saveUser(String account,String password,String passwordRepeat,Model model){
 		
-		if(!userService.checkFormat(user.getAccount(),user.getPassword())){
+		System.out.println(account + "   " + password + "  " + passwordRepeat);
+		if(!passwordRepeat.equals(password)){
+			model.addAttribute("errorMsg","账户和密码出错，请重新输入！");
+			return "forward:/user/register";
+		}
+		if(!userService.checkFormat(account,password)){
 			model.addAttribute("errorMsg","账户和密码不能为空");
 			return "forward:/user/register"; 
 		}
 		
-		boolean exist = userService.isUserExist(user.getAccount());
+		boolean exist = userService.isUserExist(account);
 		
 		if(exist){
 			model.addAttribute("errorMsg","账户已存在");
 			return "forward:/user/register";
 		}
+
 		
-		userService.saveUser(user);
+		User user = userService.saveUser(account,password);
+		
 		model.addAttribute("user",user);
 		
 		return "forward:/";
@@ -82,7 +91,7 @@ public class UserManagerController{
 	@ResponseBody
 	public Map verifyCode(String code,@ModelAttribute("checkcode") String checkcode){
 		code = code.trim().toLowerCase();
-		System.out.println(checkcode);
+//		System.out.println(checkcode);
 		HashMap model = new HashMap();
 		if(code.equals(checkcode)){
 			model.put("flage",true);
@@ -90,5 +99,29 @@ public class UserManagerController{
 			model.put("flage",false);
 		}
 		return model;
+	}
+	
+	/**
+	 * 功能：用户中心
+	 * @param userId 用户id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("center")
+	public String userCenter(@ModelAttribute("user") User user,ModelMap model){
+		
+		model.addAttribute("user",user);
+		return "/user/center";
+	}
+	
+	@RequestMapping("openshop")
+	public String openShop(){
+		return "/shop/createShop";
+	}
+	
+	@RequestMapping("saveshop")
+	public String saveShop(Shop shop,ModelMap model){
+		
+		return "";
 	}
 }

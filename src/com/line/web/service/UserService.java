@@ -10,6 +10,8 @@ public interface UserService {
 	
 	public boolean isUserExist(String account);
 	
-	public void saveUser(User user);
+	public User saveUser(String account,String password);
+	
+	public User findUserById(String userId);
 
 }

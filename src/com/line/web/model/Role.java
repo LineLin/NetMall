@@ -2,6 +2,7 @@ package com.line.web.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,16 +24,14 @@ public class Role {
 	
 	private String name;
 	
-	public Role(String id) {
-		super();
-		this.id = id;
-	}
-
-	public Role() {
-		super();
-	}
-
 	private List<User> users;
+	
+	public Role(){	
+	}
+	
+//	public Role(String name){
+//		this.name = name;
+//	}
 	
 	@Id
 	@GeneratedValue(generator="sd")
@@ -44,7 +43,8 @@ public class Role {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
+	@Column(name="name",unique=true)
 	public String getName() {
 		return name;
 	}
@@ -53,11 +53,6 @@ public class Role {
 		this.name = name;
 	}
 	@ManyToMany
-	@JoinTable(
-			name="role_ref_user",
-			joinColumns={@JoinColumn(name="role_id")},
-			inverseJoinColumns={@JoinColumn(name="user_id")}
-	)
 	public List<User> getUsers() {
 		return users;
 	}

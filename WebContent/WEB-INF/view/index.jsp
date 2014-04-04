@@ -29,6 +29,7 @@
 			.head-0,.head-0 ul
 			{
 				height: 30px;
+				line-height:30px;
 				background-color: #F7F7F7;
 			}
 			.head-0 li

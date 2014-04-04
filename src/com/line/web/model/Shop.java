@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,14 +17,30 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="shop")
 public class Shop {
 	
+	static public enum ShopStatus{
+		AUDIT("待审核"),NORMAL("正常"),BAN("封禁");
+		
+		private final String name;
+		
+		ShopStatus(String name){
+			this.name = name;
+		}
+		
+		public String getName(){
+			return name;
+		}
+	}
+	
 	private String id;
 
 	public Shop() {
 	}
-
+	
 	private String name;
 	
 	private int credit;
+	
+	private ShopStatus status;
 	
 	private List<Commodity> commoidities;
 	
@@ -41,11 +58,11 @@ public class Shop {
 	}
 	
 	@OneToOne
+	@JoinColumn(name="boss")
 	public User getShopKeeper() {
 		return shopKeeper;
 	}
 	
-	@Column(name="boss")
 	public void setShopKeeper(User shopKeeper) {
 		this.shopKeeper = shopKeeper;
 	}
@@ -73,6 +90,14 @@ public class Shop {
 
 	public void setCommoidities(List<Commodity> commoidities) {
 		this.commoidities = commoidities;
+	}
+
+	public ShopStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ShopStatus status) {
+		this.status = status;
 	}
 	
 	

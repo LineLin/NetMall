@@ -7,5 +7,7 @@ public interface BasicDao<T> {
 	public void update(T obj);
 	
 	public void delete(T obj);
+	
+	public T findById(String id,Class<T> clz);
 
 }

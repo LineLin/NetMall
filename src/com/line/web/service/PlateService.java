@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
-import com.line.web.utils.Page;
+import com.line.web.utils.enumtool.Page;
 import com.line.web.view.support.PlateInfo;
 
 public interface PlateService {

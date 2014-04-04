@@ -1,4 +1,4 @@
-package com.line.web.utils;
+package com.line.web.utils.enumtool;
 
 import com.line.web.sys.SysSetting;
 
