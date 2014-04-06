@@ -6,10 +6,10 @@ import com.line.web.model.Role;
 
 public interface RoleDao extends BasicDao<Role> {
 	
-	public List<Role> getAllRoles();
+	 List<Role> getAllRoles();
 	
-	public Role getById(String id);
+	 Role getById(String id);
 	
-	public Role getByName(String name);
+	 Role getByName(String name);
 	
 }

@@ -9,16 +9,16 @@ import com.line.web.view.support.PlateInfo;
 
 public interface PlateService {
 	
-	public List<PlateInfo> getIndexPlateInfo();
+	 List<PlateInfo> getIndexPlateInfo();
 	
-	public List<PlateInfo> getSubPlateInfo(Plate plate,int deptch,Page page);
+	 List<PlateInfo> getSubPlateInfo(Plate plate,int deptch,Page page);
 	
-	public List<Plate> initPlate();
+	 List<Plate> initPlate();
 	
-	public Plate getPlate(String id);
+	 Plate getPlate(String id);
 	
-	public void getPopularCommodity(List<PlateInfo> list,String property,int count);
+	 void getPopularCommodity(List<PlateInfo> list,String property,int count);
 	
-	public List<Commodity> getPageCommodity(Plate plate,String sortBy,boolean isDesc,int page,int pageSize);
+	 List<Commodity> getPageCommodity(Plate plate,String sortBy,boolean isDesc,int page,int pageSize);
 		
 }

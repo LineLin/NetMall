@@ -24,9 +24,8 @@ public class Plate {
 	private int level;
 	//板块显示级别
 	private int showSeq;
-	
+	//板块树中的路径
 	private String path;
-	
 	//从属版块
 	private List<Plate> childPlate;
 	//所属板块

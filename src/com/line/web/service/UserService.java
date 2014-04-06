@@ -4,14 +4,16 @@ import com.line.web.model.User;
 
 public interface UserService {
 	
-	public boolean checkFormat(String account,String password);
+	boolean checkFormat(String account,String password);
 	
-	public User verification(String account,String password);
+	User verification(String account,String password);
 	
-	public boolean isUserExist(String account);
+	boolean isUserExist(String account);
 	
-	public User saveUser(String account,String password);
+	User saveUser(String account,String password);
 	
-	public User findUserById(String userId);
+	User findUserById(String userId);
+	
+	
 
 }

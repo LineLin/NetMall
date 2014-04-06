@@ -6,20 +6,20 @@ import com.line.web.model.Plate;
 
 public interface PlateDao extends BasicDao<Plate>{
 	
-//	public void save(Plate plate);
+//	 void save(Plate plate);
 	
-	public List<Plate> getPlateOrderByShowSeq(String pid,int count);
+	 List<Plate> getPlateOrderByShowSeq(String pid,int count);
 	
-	public List<Plate> getByLevel(int level);
+	 List<Plate> getByLevel(int level);
 	
-//	public void del(String plateId);
+//	 void del(String plateId);
 	
-//	public void update(Plate plate);
+//	 void update(Plate plate);
 	
-	public Plate getById(String id);
+	 Plate getById(String id);
 	
-	public List<Plate> getByPid(Plate parent);
+	 List<Plate> getByPid(Plate parent);
 	
-	public List<Plate> getLeafPlate(Plate plate);
+	 List<Plate> getLeafPlate(Plate plate);
 	
 }

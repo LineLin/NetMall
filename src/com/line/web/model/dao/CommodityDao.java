@@ -7,19 +7,19 @@ import com.line.web.model.Plate;
 
 public interface CommodityDao extends BasicDao<Commodity>{
 	
-	public Commodity getById(String id);
+	 Commodity getById(String id);
 	
-	public List<Commodity> getByPlate(Plate plateId);
+	 List<Commodity> getByPlate(Plate plateId);
 	
-	public List<Commodity> getByPlate(Plate plateId,int count);
+	 List<Commodity> getByPlate(Plate plateId,int count);
 	
-	public List<Commodity> getByPlate(Plate plate,int page,int pageSize,String sortBy,boolean isDesc);
+	 List<Commodity> getByPlate(Plate plate,int page,int pageSize,String sortBy,boolean isDesc);
 	
-	public List<Commodity> getListWithOrder(Plate plateId,int count,String property,boolean isDesc);
+	 List<Commodity> getListWithOrder(Plate plateId,int count,String property,boolean isDesc);
 
-	public List<Commodity> getListWithOrder(Plate plateId,int count,String property);
+	 List<Commodity> getListWithOrder(Plate plateId,int count,String property);
 	
-	public List<Commodity> getByPlates(List<Plate> plates,String property,int count,boolean isDesc);
+	 List<Commodity> getByPlates(List<Plate> plates,String property,int count,boolean isDesc);
 	
-	public List<Commodity> getByPlates(List<Plate> plates,String property,int count);
+	 List<Commodity> getByPlates(List<Plate> plates,String property,int count);
 }

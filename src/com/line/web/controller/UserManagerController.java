@@ -22,7 +22,7 @@ import com.line.web.service.UserService;
 @Controller
 @RequestMapping("/user")
 @SessionAttributes({"user","checkcode"})
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked","rawtypes"})
 public class UserManagerController{
 	
 	@Autowired
@@ -86,7 +86,6 @@ public class UserManagerController{
 		return "forward:/";
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/ajax/code",method=RequestMethod.GET)
 	@ResponseBody
 	public Map verifyCode(String code,@ModelAttribute("checkcode") String checkcode){
@@ -107,21 +106,16 @@ public class UserManagerController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("center")
+	@RequestMapping("/center")
 	public String userCenter(@ModelAttribute("user") User user,ModelMap model){
 		
 		model.addAttribute("user",user);
 		return "/user/center";
 	}
 	
-	@RequestMapping("openshop")
+	@RequestMapping("/openshop")
 	public String openShop(){
 		return "/shop/createShop";
 	}
 	
-	@RequestMapping("saveshop")
-	public String saveShop(Shop shop,ModelMap model){
-		
-		return "";
-	}
 }

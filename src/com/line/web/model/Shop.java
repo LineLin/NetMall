@@ -1,5 +1,6 @@
 package com.line.web.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,35 +18,45 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="shop")
 public class Shop {
 	
+	//商店状态枚举类
 	static public enum ShopStatus{
 		AUDIT("待审核"),NORMAL("正常"),BAN("封禁");
 		
-		private final String name;
+		private final String status;
 		
-		ShopStatus(String name){
-			this.name = name;
+		ShopStatus(String status){
+			this.status = status;
 		}
 		
-		public String getName(){
-			return name;
+		public String getStatus(){
+			return status;
 		}
 	}
 	
+	//主键ID
 	private String id;
-
-	public Shop() {
-	}
 	
+	//店铺名
 	private String name;
 	
-	private int credit;
+	//信誉星级
+	private int start;
 	
+	//店铺的描述
+	private String description;
+	
+	//创建时间
+	private Date createDate;
+	
+	//店铺状态
 	private ShopStatus status;
 	
+	//店铺商品
 	private List<Commodity> commoidities;
 	
+	//店铺所属的用户
 	private User shopKeeper;
-
+	
 	@Id
 	@GeneratedValue(generator="sd")
 	@GenericGenerator(name="sd",strategy="uuid")
@@ -58,7 +69,7 @@ public class Shop {
 	}
 	
 	@OneToOne
-	@JoinColumn(name="boss")
+	@JoinColumn(name="user_id")
 	public User getShopKeeper() {
 		return shopKeeper;
 	}
@@ -66,21 +77,23 @@ public class Shop {
 	public void setShopKeeper(User shopKeeper) {
 		this.shopKeeper = shopKeeper;
 	}
-
+	
+	@Column(unique=true,nullable=false)
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int getCredit() {
-		return credit;
+	
+	@Column(columnDefinition="int default 0")
+	public int getStart() {
+		return start;
 	}
 
-	public void setCredit(int credit) {
-		this.credit = credit;
+	public void setStart(int start) {
+		this.start = start;
 	}
 	
 	@OneToMany(mappedBy="enjoinShop")
@@ -98,6 +111,22 @@ public class Shop {
 
 	public void setStatus(ShopStatus status) {
 		this.status = status;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

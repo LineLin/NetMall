@@ -22,6 +22,7 @@ public class Role {
 	
 	private String id;
 	
+	//角色名
 	private String name;
 	
 	private List<User> users;

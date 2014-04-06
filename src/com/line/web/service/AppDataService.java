@@ -6,7 +6,7 @@ import com.line.web.view.support.PlateInfo;
 
 public interface AppDataService {
 	
-	public List<PlateInfo> getIndexPlateInfo();
+	 List<PlateInfo> getIndexPlateInfo();
 	
-	public List<PlateInfo> getCommoShowList(List<PlateInfo>list,String property);
+	 List<PlateInfo> getCommoShowList(List<PlateInfo>list,String property);
 }
