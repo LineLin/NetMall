@@ -30,7 +30,16 @@
 	
 	<!-- 默认配置注解式的Handler-->
 	 <mvc:annotation-driven/>
+	 
+	 <!-- 这是用的第三方包commons-fileupload配置的处理器 ，最大上传1M的文件
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1048576"/>
+     </bean>
+	-->
 	
+	 <!-- 配置原生Servlet3.0支持的文件上传处理器 需要在web.xml中为DispatherServlet添加<multipart-config>标签或者在Controller中用@MultipartConfig注解-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	 
 	<!-- 配置jsp视图处理器，用于处理controller返回的视图 
 	<bean id="jspResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>

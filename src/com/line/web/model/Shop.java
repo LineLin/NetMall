@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Shop {
 	
 	//商店状态枚举类
-	static public enum ShopStatus{
+	public enum ShopStatus{
 		AUDIT("待审核"),NORMAL("正常"),BAN("封禁");
 		
 		private final String status;
@@ -31,7 +33,7 @@ public class Shop {
 		public String getStatus(){
 			return status;
 		}
-	}
+	};
 	
 	//主键ID
 	private String id;
@@ -104,7 +106,8 @@ public class Shop {
 	public void setCommoidities(List<Commodity> commoidities) {
 		this.commoidities = commoidities;
 	}
-
+	
+	@Enumerated(EnumType.STRING)
 	public ShopStatus getStatus() {
 		return status;
 	}

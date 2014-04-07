@@ -29,27 +29,30 @@ public class UserManagerController{
 	private UserService userService;
 		
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	@ResponseBody
-	public ModelMap login(@RequestBody User a,ModelMap model){
+//	@ResponseBody
+	public String login(@RequestBody User a,ModelMap model){
 		String account = a.getAccount();
 		String password = a.getPassword();
 //		System.out.println("account: " + account);
 //		System.out.println("password: " + password);
 		if( !userService.checkFormat(account, password)){
 			model.addAttribute("errorMsg","账号和密码不能为空，且不带特殊字符");
-			return model;
+//			return model;
 		}
 		
 		User user = userService.verification(account, password);
 		if(user != null){
 			model.addAttribute("flag",true);
 			model.addAttribute("user",user);
+			System.out.println("登陆成功");
 		}else{
 			model.addAttribute("flag",false);
 			model.addAttribute("errorMsg","账户不存在或密码错误！");
 		}
 		
-		return model;
+		System.out.println(user.getShop().getStatus().getStatus());
+//		return model;
+		return "redirect:/";
 	}
 	
 	//页面跳转
@@ -83,6 +86,8 @@ public class UserManagerController{
 		
 		model.addAttribute("user",user);
 		
+		System.out.println("注册成功");
+		
 		return "forward:/";
 	}
 	
@@ -111,11 +116,6 @@ public class UserManagerController{
 		
 		model.addAttribute("user",user);
 		return "/user/center";
-	}
-	
-	@RequestMapping("/openshop")
-	public String openShop(){
-		return "/shop/createShop";
 	}
 	
 }
