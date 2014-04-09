@@ -1,5 +1,6 @@
 package com.line.web.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,7 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="plate")
-public class Plate {	
+public class Plate implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String id;
 	//板块名

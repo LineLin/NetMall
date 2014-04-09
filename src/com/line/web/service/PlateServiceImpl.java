@@ -60,6 +60,7 @@ public class PlateServiceImpl implements PlateService {
 			info.setSubPlates(getSubPlateInfo(p,INDEX_PLATE_SHOW_DEPTH,Page.INDEX));
 			platesInfo.add(info);
 		}
+		
 		return platesInfo;
 	}
 
@@ -96,7 +97,7 @@ public class PlateServiceImpl implements PlateService {
 	 * 功能：根据Id找板块
 	 */
 	@Override
-	public Plate getPlate(String id){
+	public Plate getPlateById(String id){
 		return plateDao.getById(id);
 	}
 	
@@ -205,6 +206,24 @@ public class PlateServiceImpl implements PlateService {
 		List<Commodity> list;
 		list = commodityDao.getByPlate(plate, page, pageSize, sortBy, isDesc);
 		return list;
+	}
+
+	/**
+	 * 功能：取得某个级别的板块集合
+	 * @param level 板块级别
+	 */
+	@Override
+	public List<Plate> getPlateByLevel(int level) {
+		return plateDao.getByLevel(level);
+	}
+	
+	/**
+	 * 功能：取得某个板块下的直接子板块
+	 * @param parentId 父板块的id
+	 */
+	@Override
+	public List<Plate> getByParentPlate(String parentId) {
+		return plateDao.getByPid(parentId);
 	}
 
 }

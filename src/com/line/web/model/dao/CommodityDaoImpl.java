@@ -16,7 +16,7 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 	 */
 	@Override
 	public Commodity getById(String id) {
-		Commodity com =(Commodity) sf.getCurrentSession().get(Commodity.class,id); 
+		Commodity com =(Commodity) getSession().get(Commodity.class,id); 
 		return com;
 	}
 	
@@ -38,7 +38,7 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 	@Override
 	public List<Commodity> getByPlate(Plate plate,int count) {
 		String hql = "select c from Commodity c where c.enjoinPlate =:plate";
-		return sf.getCurrentSession().createQuery(hql)
+		return getSession().createQuery(hql)
 				.setParameter("plate",plate)
 				.setFirstResult(0)
 				.setMaxResults(count)
@@ -59,7 +59,7 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 			hql += " desc";
 		}
 		
-		return sf.getCurrentSession().createQuery(hql)
+		return getSession().createQuery(hql)
 				.setParameter("plate",plate)
 				.setParameter("property","c."+property)
 				.setFirstResult(0)
@@ -97,7 +97,7 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 		if(isDesc){
 			hql += " desc"; 
 		}
-		return sf.getCurrentSession().createQuery(hql)
+		return getSession().createQuery(hql)
 				.setFirstResult(0)
 				.setMaxResults(count)
 				.list();
@@ -124,11 +124,16 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 		if(isDesc){
 			hql += " desc";
 		}
-		return sf.getCurrentSession().createQuery(hql)
+		return getSession().createQuery(hql)
 				.setParameter("plate",plate)
 				.setFirstResult((page-1) * pageSize)
 				.setMaxResults(pageSize)
 				.list();
+	}
+
+	@Override
+	public List<Commodity> getAll() {
+		return getSession().createQuery("from Commmodity c").list();
 	}
 
 }

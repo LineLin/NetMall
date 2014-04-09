@@ -14,17 +14,17 @@ public class RoleDaoImpl extends BasicDaoImpl<Role> implements RoleDao {
 	
 	@Override
 	public List<Role> getAllRoles() {
-		return sf.getCurrentSession().createQuery("from Role r").list();
+		return getSession().createQuery("from Role r").list();
 	}
 
 	@Override
 	public Role getById(String id) {
-		return (Role)sf.getCurrentSession().get(Role.class, id);
+		return (Role)getSession().get(Role.class, id);
 	}
 
 	@Override
 	public Role getByName(String name) {
-		return (Role)sf.getCurrentSession().createQuery("from Role r where r.name = :name")
+		return (Role)getSession().createQuery("from Role r where r.name = :name")
 				.setParameter("name",name)
 				.uniqueResult();
 	}

@@ -8,6 +8,8 @@ import com.line.web.model.Plate;
 public interface CommodityDao extends BasicDao<Commodity>{
 	
 	 Commodity getById(String id);
+	 
+	 List<Commodity> getAll();
 	
 	 List<Commodity> getByPlate(Plate plateId);
 	

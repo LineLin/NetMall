@@ -10,7 +10,7 @@ public class ShopDaoImpl extends BasicDaoImpl<Shop> implements ShopDao {
 
 	@Override
 	public Shop findByName(String name) {
-		return (Shop) sf.getCurrentSession().createQuery("from Shop p where p.name = :name")
+		return (Shop) getSession().createQuery("from Shop p where p.name = :name")
 				.setParameter("name",name)
 				.uniqueResult();
 	}

@@ -1,5 +1,6 @@
 package com.line.web.model.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,19 +12,28 @@ public class BasicDaoImpl<T> implements BasicDao<T>{
 	@Autowired
 	protected SessionFactory sf;
 	
+	@Override
 	public void save(T obj){
-		sf.getCurrentSession().save(obj);
+		getSession().save(obj);
 	}
 	
+	@Override
 	public void update(T obj){
-		sf.getCurrentSession().update(obj);
+		getSession().update(obj);
 	}
 	
+	@Override
 	public void delete(T obj){
-		sf.getCurrentSession().delete(obj);
+		getSession().delete(obj);
 	}
 	
+	@Override
 	public T findById(String id,Class<T> clz){
-		return (T) sf.getCurrentSession().get(clz, id);
+		return (T) getSession().get(clz, id);
+	}
+	
+	@Override
+	public Session getSession(){
+		return sf.getCurrentSession();
 	}
 }

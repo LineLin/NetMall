@@ -1,5 +1,6 @@
 package com.line.web.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -14,7 +15,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="orderform")
-public class OrderForm {
+public class OrderForm implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	public OrderForm() {
 	}

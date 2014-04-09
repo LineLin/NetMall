@@ -1,13 +1,12 @@
 package com.line.web.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -18,7 +17,9 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name="role")
-public class Role {
+public class Role implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String id;
 	
@@ -53,7 +54,7 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@ManyToMany
+	@ManyToMany(mappedBy="roles")
 	public List<User> getUsers() {
 		return users;
 	}

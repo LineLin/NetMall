@@ -1,5 +1,6 @@
 package com.line.web.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,20 +19,22 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="shop")
-public class Shop {
+public class Shop implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	//商店状态枚举类
 	public enum ShopStatus{
 		AUDIT("待审核"),NORMAL("正常"),BAN("封禁");
 		
-		private final String status;
+		private final String statusMsg;
 		
-		ShopStatus(String status){
-			this.status = status;
+		ShopStatus(String statusMsg){
+			this.statusMsg = statusMsg;
 		}
 		
-		public String getStatus(){
-			return status;
+		public String getStatusMsg(){
+			return statusMsg;
 		}
 	};
 	
@@ -107,7 +110,7 @@ public class Shop {
 		this.commoidities = commoidities;
 	}
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	public ShopStatus getStatus() {
 		return status;
 	}

@@ -15,7 +15,11 @@ public interface PlateService {
 	
 	 List<Plate> initPlate();
 	
-	 Plate getPlate(String id);
+	 Plate getPlateById(String id);
+	 
+	 List<Plate> getByParentPlate(String parentId);
+	 
+	 List<Plate> getPlateByLevel(int level);
 	
 	 void getPopularCommodity(List<PlateInfo> list,String property,int count);
 	

@@ -17,7 +17,7 @@ public class UserDaoImpl extends BasicDaoImpl<User> implements UserDao {
 	 */
 	@Override
 	public User findByAccountAndPsw(String account,String password){
-		User user = (User) sf.getCurrentSession()
+		User user = (User) getSession()
 					.createQuery("from User u where u.account =?1 and u.password =?2")
 					.setParameter("1",account)
 					.setParameter("2",password)
@@ -31,7 +31,7 @@ public class UserDaoImpl extends BasicDaoImpl<User> implements UserDao {
 	 */
 	@Override
 	public User findByAccount(String account) {
-		User user = (User) sf.getCurrentSession()
+		User user = (User) getSession()
 				.createQuery("from User u where u.account = ?1")
 				.setParameter("1",account)
 				.uniqueResult();
@@ -44,7 +44,7 @@ public class UserDaoImpl extends BasicDaoImpl<User> implements UserDao {
 //	@Override
 //	public void save(User user) {
 //		
-//		sf.getCurrentSession().save(user);
+//		getSession().save(user);
 //	}
 //	
 	/**
@@ -52,7 +52,7 @@ public class UserDaoImpl extends BasicDaoImpl<User> implements UserDao {
 	 */
 	@Override
 	public List<User> all() {
-		List<User> users =  sf.getCurrentSession()
+		List<User> users =  getSession()
 							.createQuery("from User")
 							.list();
 		return users;

@@ -8,7 +8,7 @@ import org.hibernate.Session;
 
 import com.line.web.utils.HibernateUtil;
 
-public class CommodityTest extends TestCase {
+public class CommodityInit extends TestCase {
 	private Session session;
 	
 	//测试添加商品实例。

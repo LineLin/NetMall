@@ -18,9 +18,8 @@ public class PlateTest{
 	private SessionFactory sf;
 	
 	@Test
-	public  void testAddPlate(){
+	public void testAddPlate(){
 			Session session = sf.getCurrentSession();
-			
 			int i;
 			for(i=0; i<10; i++){
 				Plate p = new Plate();

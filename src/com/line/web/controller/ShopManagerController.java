@@ -1,25 +1,20 @@
 package com.line.web.controller;
 
-
-import java.io.IOException;
-
-import javax.servlet.http.Part;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.line.web.model.Commodity;
 import com.line.web.model.Shop;
 import com.line.web.model.User;
+import com.line.web.service.CommodityService;
 import com.line.web.service.ShopService;
 import com.line.web.service.UserService;
 import com.line.web.utils.FileUploadUtil;
+import com.line.web.view.support.CommodityForm;
 
 @Controller
 @RequestMapping("/shop")
@@ -31,6 +26,11 @@ public class ShopManagerController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommodityService commodityService;
+	
+	private final long maxFileSize =  1024 * 8l; //	1M   
 	
 	@RequestMapping("/index")
 	public String index(){
@@ -67,17 +67,17 @@ public class ShopManagerController {
 	}
 	
 	@RequestMapping(value="/save/commodity",method= RequestMethod.POST)
-	public String saveCommodity(Commodity com,@RequestParam("file") Part image){
-		System.out.println(com.getName());
-		System.out.println(image.getName());
-		System.out.println(image.getSize());
-		System.out.println(image.getHeaderNames());
-		System.out.println(FileUploadUtil.parseFileName(image.getHeader("content-disposition")));
-//		try {
-////			image.write("test.doc");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+	public String saveCommodity(CommodityForm form,ModelMap model,@ModelAttribute User user){
+
+		if(form.getPhoto() != null){ 
+			String err = FileUploadUtil.checkUploadFile(form.getPhoto(), maxFileSize);
+			if(err != null){
+				model.addAttribute("errMsg",err);
+				return "forward:/shop/add/commodity";
+			}
+			FileUploadUtil.filesCopy(form.getPhoto(),"com/" + user.getName() + form.getPhoto().getOriginalFilename());
+		}
+		
 		return "";
 	}
 }

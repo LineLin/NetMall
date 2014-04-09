@@ -50,7 +50,7 @@ public class UserManagerController{
 			model.addAttribute("errorMsg","账户不存在或密码错误！");
 		}
 		
-		System.out.println(user.getShop().getStatus().getStatus());
+		System.out.println(user.getShop().getStatus().getStatusMsg());
 //		return model;
 		return "redirect:/";
 	}

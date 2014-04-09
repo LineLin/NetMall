@@ -1,11 +1,10 @@
-package com.line.web.view.support;
+package com.line.web.view;
 
 import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
-
 public class MultiViewResolver implements ViewResolver {
 	
 	private Map<String,ViewResolver> resolvers;

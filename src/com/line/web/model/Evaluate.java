@@ -1,5 +1,7 @@
 package com.line.web.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +13,16 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="evaluate")
-public class Evaluate {
+public class Evaluate implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	private String id;
+	
+	private String context;
+	
+	private User user;
+	
 	
 	public Evaluate(String id) {
 		this.id = id;
@@ -19,12 +30,6 @@ public class Evaluate {
 
 	public Evaluate() {
 	}
-
-	private String id;
-	
-	private String context;
-	
-	private User user;
 	
 	@Id
 	@GeneratedValue(generator="sd")

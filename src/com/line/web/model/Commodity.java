@@ -1,15 +1,18 @@
 package com.line.web.model;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -17,7 +20,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="commodity")
-public class Commodity {
+public class Commodity implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String id;
 	
@@ -45,8 +50,8 @@ public class Commodity {
 	//所属板块
 	private Plate enjoinPlate;
 	
-	//特别属性
-	private List<CommodityAttribute> attributes; 
+	//商品销售类种
+	private List<Classification> kinds;
 	
 	@ManyToOne
 	@JoinColumn(name="shop_id")
@@ -110,19 +115,6 @@ public class Commodity {
 		this.sales = sales;
 	}
 	
-	@ManyToMany
-	@JoinTable(name="com_ref_attr",
-		joinColumns={@JoinColumn(name="com_id")},
-		inverseJoinColumns={@JoinColumn(name="attr_id")}
-	)
-	public List<CommodityAttribute> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(List<CommodityAttribute> attributes) {
-		this.attributes = attributes;
-	}
-
 	public String getImage() {
 		return image;
 	}
@@ -139,6 +131,15 @@ public class Commodity {
 
 	public void setEnjoinPlate(Plate enjoinPlate) {
 		this.enjoinPlate = enjoinPlate;
+	}
+	
+	@OneToMany(mappedBy="commodity")
+	public List<Classification> getKinds() {
+		return kinds;
+	}
+
+	public void setKinds(List<Classification> kinds) {
+		this.kinds = kinds;
 	}
 
 }

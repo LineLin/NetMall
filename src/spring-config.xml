@@ -68,7 +68,7 @@
 	-->
 	
 	<!-- 配置多视图处理器 -->
-	<bean id="multiViewResolver" class="com.line.web.view.support.MultiViewResolver">
+	<bean id="multiViewResolver" class="com.line.web.view.MultiViewResolver">
 		<property name="resolvers">
 			<map>
 				<entry key="jsp">

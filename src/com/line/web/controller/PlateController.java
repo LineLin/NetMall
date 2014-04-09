@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
@@ -15,6 +16,7 @@ import com.line.web.service.PlateService;
 import com.line.web.sys.SysSetting;
 import com.line.web.utils.enumtool.Page;
 import com.line.web.view.support.PlateInfo;
+import com.line.web.view.support.PlateVo;
 
 @Controller
 @RequestMapping(value="/plate")
@@ -32,7 +34,7 @@ public class PlateController {
 	 */
 	@RequestMapping(value="/itemlist/first/{id}")
 	public String showFirstPlate(@PathVariable("id") String plateId,Model model){
-		Plate p = plateService.getPlate(plateId);
+		Plate p = plateService.getPlateById(plateId);
 		if(p == null){
 			return "redirect:/";
 		}
@@ -44,7 +46,7 @@ public class PlateController {
 	
 	@RequestMapping(value="/itemlist/second/{id}")
 	public String showSecondPlate(@PathVariable("id") String plateId,Model model){
-		Plate p = plateService.getPlate(plateId);
+		Plate p = plateService.getPlateById(plateId);
 		if(p == null){
 			return "redirect:/";
 		}
@@ -57,7 +59,7 @@ public class PlateController {
 	@RequestMapping(value="/itemlist/items")
 	public String showThirdPlate(@RequestParam(value="id") String plateId,int page,
 			@RequestParam(value="sortBy",required=false) String sortBy,Model model){
-		Plate p = plateService.getPlate(plateId);
+		Plate p = plateService.getPlateById(plateId);
 		if(p == null){
 			return "redirect:/";
 		}
@@ -69,4 +71,18 @@ public class PlateController {
 		return "/itemlist/third";
 	}
 	
+	@RequestMapping(value="/getplates/level/{level}",produces="application/json")
+	@ResponseBody
+	public List<PlateVo> getPlateByLevel(@PathVariable("level") int level){
+		List<Plate> plates = plateService.getPlateByLevel(level);
+		return PlateVo.converToVo(plates);
+	}
+	
+	@RequestMapping(value="/getplates/parent/{plateId}",produces="application/json")
+	@ResponseBody
+	public List<PlateVo> getPlateByParentPlate(@PathVariable("plateId") String plateId){
+		List<Plate> plates = plateService.getByParentPlate(plateId);
+		return PlateVo.converToVo(plates);
+	}
+		
 }

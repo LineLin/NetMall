@@ -18,6 +18,8 @@ public interface PlateDao extends BasicDao<Plate>{
 	
 	 Plate getById(String id);
 	
+	 List<Plate> getByPid(String parentId);
+	 
 	 List<Plate> getByPid(Plate parent);
 	
 	 List<Plate> getLeafPlate(Plate plate);
