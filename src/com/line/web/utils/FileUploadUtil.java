@@ -18,7 +18,8 @@ public class FileUploadUtil {
 	
 	private static String[] imageSuffix = {"jpg","jpeg","gif","png","pneg","bmp"};
 
-	public static void filesCopy(MultipartFile source,String targetPath){
+	public static boolean filesCopy(MultipartFile source,String targetPath){
+		
 		byte[] bf = new byte[1024];
 		File file = new File(BASE_URL + targetPath);
 		if(!file.getParentFile().exists()){
@@ -36,18 +37,18 @@ public class FileUploadUtil {
 				out.write(bf,0,read);
 				read = in.read(bf);
 			}
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (IOException e){
-			e.printStackTrace();
+			return false;
 		}finally{
 			try{
 				in.close();
 				out.close();
-			}catch(IOException e){
+			}catch(Exception e){
 				e.printStackTrace();
 			}
 		}
+		return true;
 	}
 	
 	/**
@@ -103,5 +104,17 @@ public class FileUploadUtil {
 		 case 4 : return number + "T";
 		 default : return "未知大小";
 		}
+	}
+	
+	public static String getSuffix(String fileName){
+		int n = fileName.lastIndexOf(".");
+		if(n == -1){
+			return "";
+		}
+		return fileName.substring(n+1,fileName.length());
+	}
+
+	public static String getBaseUrl() {
+		return BASE_URL;
 	}
 }

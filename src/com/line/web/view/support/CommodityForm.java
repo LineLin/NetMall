@@ -14,10 +14,14 @@ public class CommodityForm {
 	
 	private String plateId;
 	
-//	private String multipart;
+	private MultipartFile[] classValueImage;
 	
-//	private String[] 
-
+	private int[] count;
+	
+	private String[] classitemId;
+	
+	private String[] classValue;
+	
 	public String getName() {
 		return name;
 	}
@@ -50,11 +54,36 @@ public class CommodityForm {
 		this.plateId = plateId;
 	}
 
-//	public ClassificationValue getValue() {
-//		return value;
-//	}
-//
-//	public void setValue(ClassificationValue value) {
-//		this.value = value;
-//	}
+	public MultipartFile[] getClassValueImage() {
+		return classValueImage;
+	}
+
+	public void setClassValueImage(MultipartFile[] classValueImage) {
+		this.classValueImage = classValueImage;
+	}
+
+	public int[] getCount() {
+		return count;
+	}
+
+	public void setCount(int[] count) {
+		this.count = count;
+	}
+
+	public String[] getClassitemId() {
+		return classitemId;
+	}
+
+	public void setClassitemId(String[] classitemId) {
+		this.classitemId = classitemId;
+	}
+
+	public String[] getClassValue() {
+		return classValue;
+	}
+
+	public void setClassValue(String[] classValue) {
+		this.classValue = classValue;
+	}
+
 }

@@ -10,7 +10,7 @@ public interface BasicDao<T> {
 	
 	 void delete(T obj);
 	
-	 T findById(String id,Class<T> clz);
+	 T getById(String id);
 	 
 	 Session getSession();
 }

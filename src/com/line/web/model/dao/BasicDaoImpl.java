@@ -1,14 +1,21 @@
 package com.line.web.model.dao;
 
+import java.lang.reflect.ParameterizedType;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @SuppressWarnings("unchecked")
-public class BasicDaoImpl<T> implements BasicDao<T>{
+abstract class BasicDaoImpl<T> implements BasicDao<T>{
 	
+	public Class<T> clz;
+	
+	public BasicDaoImpl(){
+		clz =(Class<T>) ((ParameterizedType) getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+	}
 	@Autowired
 	protected SessionFactory sf;
 	
@@ -28,7 +35,7 @@ public class BasicDaoImpl<T> implements BasicDao<T>{
 	}
 	
 	@Override
-	public T findById(String id,Class<T> clz){
+	public T getById(String id){
 		return (T) getSession().get(clz, id);
 	}
 	

@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
+import com.line.web.model.Shop;
 
 public interface CommodityDao extends BasicDao<Commodity>{
-	
-	 Commodity getById(String id);
 	 
 	 List<Commodity> getAll();
+	 
+	 List<Commodity> getByShop(Shop shop,int page,int pageSize);
 	
 	 List<Commodity> getByPlate(Plate plateId);
 	

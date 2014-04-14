@@ -16,6 +16,8 @@ public class ClassItem {
 	
 	private String name;
 	
+	public ClassItem(){};
+	
 	public ClassItem(String name){
 		this.name = name;
 	}

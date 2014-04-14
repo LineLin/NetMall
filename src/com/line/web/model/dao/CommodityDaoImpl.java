@@ -6,19 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.line.web.model.Commodity;
 import com.line.web.model.Plate;
+import com.line.web.model.Shop;
 
 @Repository
 @SuppressWarnings("unchecked")
 public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements CommodityDao {
-	
-	/**
-	 * 功能：通过id查找商品 
-	 */
-	@Override
-	public Commodity getById(String id) {
-		Commodity com =(Commodity) getSession().get(Commodity.class,id); 
-		return com;
-	}
 	
 	/**
 	 * @param plate 所属板块的id
@@ -134,6 +126,16 @@ public class CommodityDaoImpl extends BasicDaoImpl<Commodity> implements Commodi
 	@Override
 	public List<Commodity> getAll() {
 		return getSession().createQuery("from Commmodity c").list();
+	}
+
+	@Override
+	public List<Commodity> getByShop(Shop shop, int page, int pageSize) {
+		
+		return getSession().createQuery("from Commodity c where c.enjoinShop = :shop")
+				.setParameter("shop",shop)
+				.setFirstResult((page-1) * pageSize)
+				.setMaxResults(pageSize)
+				.list();
 	}
 
 }
